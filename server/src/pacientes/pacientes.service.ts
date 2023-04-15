@@ -4,6 +4,7 @@ import { CreatePacienteDto } from './dto/create-paciente.dto';
 import { UpdatePacienteDto } from './dto/update-paciente.dto';
 import { Paciente } from './entities/paciente.entity';
 import { EntityRepository } from '@mikro-orm/mysql';
+import { wrap } from '@mikro-orm/core';
 
 
 @Injectable()
@@ -14,8 +15,10 @@ export class PacientesService {
     private readonly pacienteRepository: EntityRepository<Paciente>,
   ) {}
 
-  create(createPacienteDto: CreatePacienteDto) {
-    return 'This action adds a new paciente';
+  async create(createPacienteDto: CreatePacienteDto) {
+    const paciente = this.pacienteRepository.create(createPacienteDto);
+    await this.pacienteRepository.flush();
+    return paciente
   }
 
   findAll() {
@@ -23,14 +26,20 @@ export class PacientesService {
   }
 
   findOne(id: number) {
-    return this.pacienteRepository.findOne(+id);
+    return this.pacienteRepository.findOne(id);
   }
 
-  update(id: number, updatePacienteDto: UpdatePacienteDto) {
-    return `This action updates a #${id} paciente`;
+  async update(id: number, updatePacienteDto: UpdatePacienteDto) {
+    const paciente=await this.pacienteRepository.findOne(id);
+    wrap(paciente).assign(updatePacienteDto);
+    this.pacienteRepository.flush();
+    return paciente;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} paciente`;
+  async remove(id: number) {
+    const paciente=await this.pacienteRepository.findOne(id);
+    this.pacienteRepository.remove(paciente);
+    await this.pacienteRepository.flush();
+    return paciente;
   }
 }

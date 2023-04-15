@@ -23,6 +23,7 @@
     "@mikro-orm/core": "^5.6.16",
     "@mikro-orm/mysql": "^5.6.16",
     "@mikro-orm/nestjs": "^5.1.8",
+    "@mikro-orm/seeder": "^5.6.16",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
