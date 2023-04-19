@@ -1,4 +1,5 @@
-import { PrimaryKey, Property, Entity } from "@mikro-orm/core";
+import { PrimaryKey, Property, Entity, OneToMany, Collection } from "@mikro-orm/core";
+import { Compcorp } from "./compcorp.entity";
 
 @Entity()
 export class Paciente {
@@ -28,4 +29,7 @@ export class Paciente {
 
     @Property()
     data_cadastro: Date = new Date();
+
+    @OneToMany(()=>Compcorp,(compcorp)=>compcorp.paciente)
+    compcorp=new Collection<Compcorp>(this)
 }

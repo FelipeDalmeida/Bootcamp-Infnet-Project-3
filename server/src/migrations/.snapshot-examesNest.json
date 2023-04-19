@@ -100,6 +100,136 @@
       ],
       "checks": [],
       "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "massa": {
+          "name": "massa",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "imc": {
+          "name": "imc",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "gordura_corporal": {
+          "name": "gordura_corporal",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "gordura_visceral": {
+          "name": "gordura_visceral",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "metabolismo_basal": {
+          "name": "metabolismo_basal",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "musculos_esqueleticos": {
+          "name": "musculos_esqueleticos",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "idade_corporal": {
+          "name": "idade_corporal",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "data_avaliacao": {
+          "name": "data_avaliacao",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "paciente_id": {
+          "name": "paciente_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        }
+      },
+      "name": "compcorp",
+      "indexes": [
+        {
+          "columnNames": [
+            "paciente_id"
+          ],
+          "composite": false,
+          "keyName": "compcorp_paciente_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "compcorp_paciente_id_foreign": {
+          "constraintName": "compcorp_paciente_id_foreign",
+          "columnNames": [
+            "paciente_id"
+          ],
+          "localTableName": "compcorp",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "paciente",
+          "updateRule": "cascade"
+        }
+      }
     }
   ]
 }
