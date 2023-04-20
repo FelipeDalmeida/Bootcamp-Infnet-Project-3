@@ -15,6 +15,8 @@ export class PacientesService {
   constructor(
     @InjectRepository(Paciente)
     private readonly pacienteRepository: EntityRepository<Paciente>,
+    @InjectRepository(Compcorp)
+    private readonly compcorpRepository: EntityRepository<Compcorp>,
   ) {}
 
   async create(createPacienteDto: CreatePacienteDto) {
@@ -28,18 +30,18 @@ export class PacientesService {
   }
 
   findOne(id: number) {
-    return this.pacienteRepository.findOne(id);
+    return this.pacienteRepository.findOneOrFail(id);
   }
 
   async update(id: number, updatePacienteDto: UpdatePacienteDto) {
-    const paciente=await this.pacienteRepository.findOne(id);
+    const paciente=await this.pacienteRepository.findOneOrFail(id);
     wrap(paciente).assign(updatePacienteDto);
     this.pacienteRepository.flush();
     return paciente;
   }
 
   async remove(id: number) {
-    const paciente=await this.pacienteRepository.findOne(id);
+    const paciente=await this.pacienteRepository.findOneOrFail(id);
     this.pacienteRepository.remove(paciente);
     await this.pacienteRepository.flush();
     return paciente;
@@ -48,46 +50,35 @@ export class PacientesService {
   //compcorp
 
   async findAllCompcorp(id:number){
-    const paciente=await this.pacienteRepository.findOne(id);
+    const paciente=await this.pacienteRepository.findOneOrFail(id);
     await paciente.compcorp.init()
     const compcorp=await paciente.compcorp.getItems();
     return compcorp;
   }
 
-  async findOneCompcorp(id:number,id_exam:number){
-    const paciente=await this.pacienteRepository.findOne(id);
-    await paciente.compcorp.init()
-    const compcorp=await paciente.compcorp.getItems()
-    let findOne={}
-    
-    compcorp.map(exame=>{
-      if(exame.id===id_exam){
-        findOne =exame
-      }
-    })
-    return findOne;
+  async findOneCompcorp(id_exam:number){
+
+    return this.compcorpRepository.findOneOrFail(id_exam)
   }
 
   async createExam(id_paciente:number,data:CreateCompcorpDto){
 
-    const paciente=await this.pacienteRepository.findOne(id_paciente,{populate:['compcorp']});
+    const paciente=await this.pacienteRepository.findOneOrFail(id_paciente);
     await paciente.compcorp.init()
+    const exame=new Compcorp()
+    exame.paciente=paciente;
+    wrap(exame).assign(data)
+    await this.compcorpRepository.persistAndFlush(exame)
 
-    let exame=new Compcorp()
-    // console.log("Exame",exame)
-    exame={...exame,...data}
-    // console.log("Exame",exame)
-    // console.log("//////////////")
-    // paciente.compcorp.add(exame)
-    // await this.pacienteRepository.flush();
+    return exame
+  }
 
-    paciente.compcorp=Reference.create(exame)
-
-    // const paciente=await this.pacienteRepository.findOne(id_paciente);
-    // await paciente.compcorp.init()
-    // const compcorp=await paciente.compcorp.add({...exame,...data})
-    ///
-
-    return paciente
+  async deleteExam(id_exam:number){
+    const exam=await this.compcorpRepository.findOneOrFail(id_exam)
+    this.compcorpRepository.remove(exam)
+    await this.compcorpRepository.flush()
+    return exam
   }
 }
+
+

@@ -35,7 +35,7 @@ export class PacientesController {
 
   @Get(':id/compcorp/:id_exam')
   findOneCompcorp(@Param('id') id: string,@Param('id_exam') id_exam:string) {
-    return this.pacientesService.findOneCompcorp(+id,+id_exam);
+    return this.pacientesService.findOneCompcorp(+id_exam);
   }
 
   @Patch(':id')
@@ -46,5 +46,10 @@ export class PacientesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.pacientesService.remove(+id);
+  }
+
+  @Delete(':id/compcorp/:id_exam')
+  deleteExam(@Param('id') id: string,@Param('id_exam') id_exam:string) {
+    return this.pacientesService.deleteExam(+id_exam);
   }
 }

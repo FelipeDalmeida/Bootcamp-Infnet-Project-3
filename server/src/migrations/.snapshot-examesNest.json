@@ -227,6 +227,7 @@
             "id"
           ],
           "referencedTableName": "paciente",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }
