@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ValidationPipe } from '@nestjs/common';
 import { PacientesService } from './pacientes.service';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
 import { UpdatePacienteDto } from './dto/update-paciente.dto';
-import { CreateCompcorpDto } from './dto/create-compcorp.dto';
-import { UpdateCompcorpDto } from './dto/update-compcorp.dto copy';
+import { CreateCompcorpDto } from '../exames/compcorp/dto/create-compcorp.dto';
+import { UpdateCompcorpDto } from '../exames/compcorp/dto/update-compcorp.dto';
+import { ListPacientesDto } from './dto/list-pacientes.dto';
+import { ListExamDto } from 'src/exames/list-exames.dto';
 
 @Controller('pacientes')
 export class PacientesController {
@@ -15,8 +17,17 @@ export class PacientesController {
   }
 
   @Get()
-  findAll() {
-    return this.pacientesService.findAll();
+  findAll(
+    @Query(
+      new ValidationPipe({
+        transform:true,
+        transformOptions:{enableImplicitConversion:true},
+        forbidNonWhitelisted:true
+      }),  
+    )
+    ListPacientesDto:ListPacientesDto
+  ) {
+    return this.pacientesService.findAll(ListPacientesDto);
   }
 
   @Get(':id')
@@ -37,14 +48,22 @@ export class PacientesController {
 
 
   //Exames
-  @Post(':id/:exam')
-  createExam(@Param('id') id: string,@Param('exam') exam: string,@Body() data: CreateCompcorpDto) {
+  @Post(':id_paciente/:exam')
+  createExam(@Param('id_paciente') id: string,@Param('exam') exam: string,@Body() data: CreateCompcorpDto) {
     return this.pacientesService.createExam(+id,exam,data);
   }
 
-  @Get(':id/:exam')
-  findAllExams(@Param('id') id: string, @Param('exam') exam: string) {
-    return this.pacientesService.findAllExams(+id, exam);
+  @Get(':id_paciente/:exam')
+  findAllExams(@Query(
+    new ValidationPipe({
+      transform:true,
+        transformOptions:{enableImplicitConversion:true},
+        forbidNonWhitelisted:true
+    })
+  ) ListExamDto:ListExamDto,
+  @Param('id_paciente') id_paciente: string, 
+  @Param('exam') exam: string) {
+    return this.pacientesService.findAllExams(ListExamDto,+id_paciente, exam);
   }
 
   @Get(':id/:exam/:id_exam')

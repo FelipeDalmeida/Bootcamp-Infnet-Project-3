@@ -1,5 +1,5 @@
 import { Factory, Faker } from '@mikro-orm/seeder';
-import { Paciente } from '../entities/paciente.entity';
+import { Paciente } from './paciente.entity';
 
 
 function getRandomInt(min:number, max:number) {

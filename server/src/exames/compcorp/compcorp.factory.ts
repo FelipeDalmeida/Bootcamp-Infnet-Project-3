@@ -1,5 +1,5 @@
 import { Factory, Faker } from '@mikro-orm/seeder';
-import { Compcorp } from '../entities/compcorp.entity';
+import { Compcorp } from './compcorp.entity';
 
 
 function getRandomInt(min:number, max:number) {

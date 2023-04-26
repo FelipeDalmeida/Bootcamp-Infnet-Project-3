@@ -1,4 +1,4 @@
-import { Paciente } from './pacientes/entities/paciente.entity';
+import { Paciente } from './pacientes/paciente.entity';
 
 export default {
     entities:[Paciente],

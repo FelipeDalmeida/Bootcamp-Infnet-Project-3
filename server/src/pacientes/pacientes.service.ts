@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
 import { UpdatePacienteDto } from './dto/update-paciente.dto';
-import { Paciente } from './entities/paciente.entity';
+import { Paciente } from './paciente.entity';
 import { EntityRepository } from '@mikro-orm/mysql';
 import { Reference, wrap } from '@mikro-orm/core';
-import { Compcorp } from './entities/compcorp.entity';
-import { CreateCompcorpDto } from './dto/create-compcorp.dto';
-import { UpdateCompcorpDto } from './dto/update-compcorp.dto copy';
+import { Compcorp } from '../exames/compcorp/compcorp.entity';
+import { CreateCompcorpDto } from '../exames/compcorp/dto/create-compcorp.dto';
+import { UpdateCompcorpDto } from '../exames/compcorp/dto/update-compcorp.dto';
+import { ListPacientesDto } from './dto/list-pacientes.dto';
+import { ListExamDto } from 'src/exames/list-exames.dto';
 
 
 @Injectable()
@@ -26,8 +28,36 @@ export class PacientesService {
     return paciente
   }
 
-  findAll() {
-    return this.pacienteRepository.findAll();
+  findAll({
+    limit = 20,
+    offset = 0,
+    order_by = "id",
+    direction = "asc",
+    search = undefined
+  }: ListPacientesDto = {}) {
+    return this.pacienteRepository.findAndCount(
+      search && {
+        $or: [
+          {
+            nome: {
+              $like: `${search}`
+            },
+            cpf:{
+              $like:`${search}`
+            }
+          }
+        ],
+      },
+
+      {
+        limit,
+        offset,
+        orderBy: {
+          [order_by]: direction,
+        },
+      }
+
+    );
   }
 
   findOne(id: number) {
@@ -52,13 +82,46 @@ export class PacientesService {
 
   //Exames
 
-  async findAllExams(id_paciente: number, exam: string) {
-    const paciente = await this.pacienteRepository.findOneOrFail(id_paciente);
+  // async findAllExams(id_paciente: number, exam: string) {
+  //   const paciente = await this.pacienteRepository.findOneOrFail(id_paciente);
+
+  //   if (exam === "compcorp") {
+  //     await paciente.compcorp.init()
+  //     const compcorp = await paciente.compcorp.getItems();
+  //     return compcorp;
+  //   }
+
+  //   return null //@TODO: Criar para avantropometrica
+  // }
+
+  async findAllExams({
+    limit = 20,
+    offset = 0,
+    order_by = "id",
+    direction = "asc",
+  }: ListExamDto = {},
+  id_paciente,
+  exam: string) {
 
     if (exam === "compcorp") {
-      await paciente.compcorp.init()
-      const compcorp = await paciente.compcorp.getItems();
-      return compcorp;
+      return this.compcorpRepository.findAndCount(
+        {
+          $or:[
+            {
+              paciente:{
+                $like:id_paciente
+              }
+            }
+          ]
+        },
+        {
+          limit,
+          offset,
+          orderBy: {
+            [order_by]: direction,
+          },
+        }
+      );
     }
 
     return null //@TODO: Criar para avantropometrica
@@ -100,7 +163,7 @@ export class PacientesService {
     return null //@TODO: Criar para avantropometrica
   }
 
-  async updateExam(id_exam: number, exam: string, data:UpdateCompcorpDto){
+  async updateExam(id_exam: number, exam: string, data: UpdateCompcorpDto) {
     if (exam === "compcorp") {
       const exam = await this.compcorpRepository.findOneOrFail(id_exam)
       wrap(exam).assign(data);
