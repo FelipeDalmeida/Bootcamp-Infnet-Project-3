@@ -6,7 +6,7 @@ export class ListPacientesDto {
     @Transform(({ value }) => parseInt(value))
     @IsInt()
     @Min(1)
-    @Max(20)
+    @Max(50)
     limit?: number;
 
     @IsOptional()

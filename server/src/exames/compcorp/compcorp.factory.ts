@@ -7,15 +7,6 @@ function getRandomInt(min:number, max:number) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); 
 }
-function getSexo() {
-    const sorteio=Math.floor(Math.random()*2)
-    if(sorteio ===0){
-        return "Masculino"
-    }
-    else{
-        return "Feminino"
-    }
-}
 
 
 export class CompcorpFactory extends Factory<Compcorp>{

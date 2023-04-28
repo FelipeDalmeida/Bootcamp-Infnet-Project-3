@@ -10,6 +10,8 @@ import { CreateCompcorpDto } from '../exames/compcorp/dto/create-compcorp.dto';
 import { UpdateCompcorpDto } from '../exames/compcorp/dto/update-compcorp.dto';
 import { ListPacientesDto } from './dto/list-pacientes.dto';
 import { ListExamDto } from 'src/exames/list-exames.dto';
+import { CreateAvantropometricaDto } from 'src/exames/avantropometrica/dto/create-avantropometrica.dto';
+import { Avantropometrica } from 'src/exames/avantropometrica/avantropometrica.entity';
 
 
 @Injectable()
@@ -20,6 +22,8 @@ export class PacientesService {
     private readonly pacienteRepository: EntityRepository<Paciente>,
     @InjectRepository(Compcorp)
     private readonly compcorpRepository: EntityRepository<Compcorp>,
+    @InjectRepository(Avantropometrica)
+    private readonly avantropometricaRepository: EntityRepository<Avantropometrica>,
   ) { }
 
   async create(createPacienteDto: CreatePacienteDto) {
@@ -42,8 +46,8 @@ export class PacientesService {
             nome: {
               $like: `${search}`
             },
-            cpf:{
-              $like:`${search}`
+            cpf: {
+              $like: `${search}`
             }
           }
         ],
@@ -82,97 +86,32 @@ export class PacientesService {
 
   //Exames
 
-  // async findAllExams(id_paciente: number, exam: string) {
-  //   const paciente = await this.pacienteRepository.findOneOrFail(id_paciente);
 
-  //   if (exam === "compcorp") {
-  //     await paciente.compcorp.init()
-  //     const compcorp = await paciente.compcorp.getItems();
-  //     return compcorp;
-  //   }
 
-  //   return null //@TODO: Criar para avantropometrica
-  // }
-
-  async findAllExams({
-    limit = 20,
-    offset = 0,
-    order_by = "id",
-    direction = "asc",
-  }: ListExamDto = {},
-  id_paciente,
-  exam: string) {
-
-    if (exam === "compcorp") {
-      return this.compcorpRepository.findAndCount(
-        {
-          $or:[
-            {
-              paciente:{
-                $like:id_paciente
-              }
-            }
-          ]
-        },
-        {
-          limit,
-          offset,
-          orderBy: {
-            [order_by]: direction,
-          },
-        }
-      );
-    }
-
-    return null //@TODO: Criar para avantropometrica
-  }
-
-  async findOneExam(id_exam: number, exam: string) {
-    if (exam === "compcorp") {
-      return this.compcorpRepository.findOneOrFail(id_exam)
-    }
-    return null //@TODO: Criar para avantropometrica
-  }
-
-  async createExam(id_paciente: number, exam: string, data: CreateCompcorpDto) {
+  async createCompcorp(id_paciente: number, data: CreateCompcorpDto) {
 
     const paciente = await this.pacienteRepository.findOneOrFail(id_paciente);
+    await paciente.compcorp.init()
+    const exame = new Compcorp()
+    exame.paciente = paciente;
+    wrap(exame).assign(data)
+    await this.compcorpRepository.persistAndFlush(exame)
 
-    if (exam === "compcorp") {
-      await paciente.compcorp.init()
-      const exame = new Compcorp()
-      exame.paciente = paciente;
-      wrap(exame).assign(data)
-      await this.compcorpRepository.persistAndFlush(exame)
-
-      return exame
-    }
-
-    return null //@TODO: Criar para avantropometrica
-
+    return exame
   }
 
-  async deleteExam(id_exam: number, exam: string) {
-    if (exam === "compcorp") {
-      const exam = await this.compcorpRepository.findOneOrFail(id_exam)
-      this.compcorpRepository.remove(exam)
-      await this.compcorpRepository.flush()
-      return exam
-    }
+  async createAvantropometrica(id_paciente: number, data: CreateAvantropometricaDto) {
 
-    return null //@TODO: Criar para avantropometrica
+    const paciente = await this.pacienteRepository.findOneOrFail(id_paciente);
+    await paciente.avantropometrica.init()
+    const exame = new Avantropometrica()
+    exame.paciente = paciente;
+    wrap(exame).assign(data)
+    await this.avantropometricaRepository.persistAndFlush(exame)
+
+    return exame
   }
 
-  async updateExam(id_exam: number, exam: string, data: UpdateCompcorpDto) {
-    if (exam === "compcorp") {
-      const exam = await this.compcorpRepository.findOneOrFail(id_exam)
-      wrap(exam).assign(data);
-      await this.compcorpRepository.flush()
-      return exam
-    }
-
-    return null //@TODO: Criar para avantropometrica
-  }
 }
 
 

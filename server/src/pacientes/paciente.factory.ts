@@ -26,9 +26,9 @@ export class PacienteFactory extends Factory<Paciente>{
         nome:faker.name.fullName(),
         idade:getRandomInt(10,100),
         sexo:getSexo(),
-        email:`${faker.lorem.words(20)}@gmail.com`,
+        email:faker.internet.email(),
         cpf:`${getRandomInt(10000000000,99999999999)}`,
-        celular:faker.phone.number(),
+        celular:faker.phone.number("(21) #####-####"),
         data_nascimento:`${faker.date.birthdate()}`,
       };
     }
