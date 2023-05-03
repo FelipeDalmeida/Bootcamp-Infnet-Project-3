@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { PacientesModule } from './pacientes/pacientes.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ExamesModule } from './exames/exames.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -11,6 +13,8 @@ import { ExamesModule } from './exames/exames.module';
     MikroOrmModule.forRoot(),
     PacientesModule,
     ExamesModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
