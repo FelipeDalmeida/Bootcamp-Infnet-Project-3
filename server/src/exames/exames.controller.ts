@@ -9,7 +9,7 @@ export class ExamesController {
   constructor(private readonly examesService: ExamesService) {}
 
   @Get(':exam/all/:id_paciente')
-  findAllExams(@Query(
+  async findAllExams(@Query(
     new ValidationPipe({
       transform:true,
         transformOptions:{enableImplicitConversion:true},
@@ -18,7 +18,7 @@ export class ExamesController {
   ) ListExamDto:ListExamDto,
   @Param('id_paciente') id_paciente: string, 
   @Param('exam') exam: string) {
-    return this.examesService.findAllExams(ListExamDto,+id_paciente, exam);
+    return await this.examesService.findAllExams(ListExamDto,+id_paciente, exam);
   }
 
   @Get(':exam/:id_exam')

@@ -27,7 +27,7 @@ export class ExamesService {
   exam: string) {
 
     if (exam === "compcorp") {
-      return this.compcorpRepository.findAndCount(
+      const [exames,count] = await this.compcorpRepository.findAndCount(
         {
           $or:[
             {
@@ -45,10 +45,15 @@ export class ExamesService {
           },
         }
       );
+
+      return {
+        exames,
+        count
+      }
     }
 
     else if (exam === "avantropometrica") {
-      return this.avantropometricaRepository.findAndCount(
+      const [exames,count] = await this.avantropometricaRepository.findAndCount(
         {
           $or:[
             {
@@ -66,6 +71,11 @@ export class ExamesService {
           },
         }
       );
+      
+      return {
+        exames,
+        count
+      }
     }
 
     return null 

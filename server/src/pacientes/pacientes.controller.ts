@@ -18,7 +18,7 @@ export class PacientesController {
   }
 
   @Get()
-  findAll(
+  async findAll(
     @Query(
       new ValidationPipe({
         transform:true,
@@ -28,7 +28,7 @@ export class PacientesController {
     )
     ListPacientesDto:ListPacientesDto
   ) {
-    return this.pacientesService.findAll(ListPacientesDto);
+    return await this.pacientesService.findAll(ListPacientesDto);
   }
 
   @Get(':id')
@@ -58,4 +58,5 @@ export class PacientesController {
   createAvantropometrica(@Param('id_paciente') id: string,@Param('exam') exam: string,@Body() data: CreateAvantropometricaDto) {
     return this.pacientesService.createAvantropometrica(+id,data);
   }
+  
 }

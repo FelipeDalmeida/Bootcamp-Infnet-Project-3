@@ -9,7 +9,6 @@ import { Compcorp } from '../exames/compcorp/compcorp.entity';
 import { CreateCompcorpDto } from '../exames/compcorp/dto/create-compcorp.dto';
 import { UpdateCompcorpDto } from '../exames/compcorp/dto/update-compcorp.dto';
 import { ListPacientesDto } from './dto/list-pacientes.dto';
-import { ListExamDto } from 'src/exames/list-exames.dto';
 import { CreateAvantropometricaDto } from 'src/exames/avantropometrica/dto/create-avantropometrica.dto';
 import { Avantropometrica } from 'src/exames/avantropometrica/avantropometrica.entity';
 
@@ -32,20 +31,33 @@ export class PacientesService {
     return paciente
   }
 
-  findAll({
+  async findAll({
     limit = 20,
     offset = 0,
     order_by = "id",
     direction = "asc",
     search = undefined
   }: ListPacientesDto = {}) {
-    return this.pacienteRepository.findAndCount(
+
+    const [pacientes, count] = await this.pacienteRepository.findAndCount(
       search && {
         $or: [
           {
             nome: {
-              $like: `${search}`
+              $like: `%${search}%`
             },
+          },
+            {
+            nome: {
+              $like: `%${search}`
+            },
+          },
+          {
+            nome: {
+              $like: `${search}%`
+            },
+          },
+          {
             cpf: {
               $like: `${search}`
             }
@@ -62,6 +74,12 @@ export class PacientesService {
       }
 
     );
+
+    return {
+      pacientes,
+      count
+    };
+
   }
 
   findOne(id: number) {

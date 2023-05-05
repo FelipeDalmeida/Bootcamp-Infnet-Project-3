@@ -72,6 +72,7 @@ export class CreateCompcorpDto {
     })
     idade_corporal: number;
 
+    @IsOptional()
     @IsString()
     data_avaliacao:string;
 

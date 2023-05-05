@@ -6,7 +6,7 @@ export class ListExamDto {
     @Transform(({ value }) => parseInt(value))
     @IsInt()
     @Min(1)
-    @Max(20)
+    @Max(25)
     limit?: number;
 
     @IsOptional()
