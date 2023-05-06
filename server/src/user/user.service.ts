@@ -10,7 +10,7 @@ export class UserService {
         private readonly userRepository:EntityRepository<User>
     ){}
 
-    findBiId(id:number){
+    findById(id:number){
         return this.userRepository.findOneOrFail(id)
     }
 

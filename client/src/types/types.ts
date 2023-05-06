@@ -38,3 +38,9 @@ export type Antropometrica = {
     altura_tornozelo?: number|string;
     data_avaliacao?:string;
 }
+
+export type User = {
+    id?:number;
+    nome: string;
+    email: string;
+  };

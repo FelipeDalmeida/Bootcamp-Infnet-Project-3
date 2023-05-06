@@ -1,13 +1,18 @@
 import {lazy, Suspense, useState, useEffect} from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {unstable_HistoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { browserHistory } from './browserHistory';
 import './App.css';
 import Header from './pages/header';
 import Load from './components/load/load';
 import { useAxios } from '../src/service/useAxios'
+import { useGlobalStore } from './service/useGlobalStore';
+import { User } from './types/types';
+
 function App() {
 
-const [isAuth,setIsAuth]=useState(true)
-const [user,setUser]=useState("")
+// const [isAuth,setIsAuth]=useState(true)
+const user = useGlobalStore((state) => state.user);
+const setUser = useGlobalStore((state) => state.setUser);
 
 const CadastraPaciente =lazy(()=>import('./pages/cadastraPaciente'))
 const ListaPacientes =lazy(()=>import('./pages/listaPacientes'))
@@ -19,26 +24,36 @@ const AvAntropometrica =lazy(()=>import('./pages/antropometrica'))
 const Login =lazy(()=>import('./pages/auth/login'))
 const Register =lazy(()=>import('./pages/auth/registro'))
 const Laudo =lazy(()=>import('./pages/Laudo'))
+const Usuario =lazy(()=>import('./pages/auth/usuario'))
 
-if(!isAuth){ 
-  return ( <Router>   
+console.log(user)
+
+useEffect(()=>{
+  console.log(user)
+})
+
+if(!user.isAuthenticated){ 
+  return (  
+  <Router history={browserHistory}>   
     <Suspense fallback={<Load/>}>
     <Routes>
-      <Route path="/" element={<Login setIsAuth={setIsAuth} setUser={setUser}/>}/>
-      <Route path="*" element={<Login setIsAuth={setIsAuth} setUser={setUser}/>}/>
-      <Route path="/registro" element={<Register setIsAuth={setIsAuth} setUser={setUser}/>}/>
-    
+      <Route path="/" element={<Login/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="*" element={<Login/>}/>
+      <Route path="/registro" element={<Register/>}/>
     </Routes>
     </Suspense>
   </Router>);
  }
   else{
     return (
-      <Router>  
+      <Router history={browserHistory}>  
             
         <Suspense fallback={<Load/>}>
-        <Header setIsAuth={setIsAuth} user={user}/>
+        <Header/>
         <Routes>
+          {/* <Route path="/login" element={<Login setIsAuth={setIsAuth} setUser={setUser}/>}/>
+          <Route path="/registro" element={<Register setIsAuth={setIsAuth} setUser={setUser}/>}/> */}
           <Route path="/" element={<CadastraPaciente/>}/>
           <Route path="/cadastro" element={<CadastraPaciente/>}/>
           <Route path="/pacientes" element={<ListaPacientes/>}/>
@@ -48,6 +63,7 @@ if(!isAuth){
           <Route path="/cadastroantropometrica/:id" element={<CadastraAvAntropometrica/>}/>
           <Route path="/antropometrica/:id" element={<AvAntropometrica/>}/>
           <Route path="/laudo/:id" element={<Laudo/>}/>
+          <Route path="/usuario" element={<Usuario/>}/>
         
         </Routes>
         </Suspense>

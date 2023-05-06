@@ -1,5 +1,5 @@
 import useAxios from "axios-hooks"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../components/Button"
 import CriaForm from "../components/Criaform"
 import Input from "../components/Input"
@@ -11,6 +11,7 @@ import Select from "../components/Select"
 import { pacienteSchema } from "../schemas/pacienteSchema"
 import { ZodError } from "zod"
 import { setFormErrorsValid } from "../service/formValidation"
+import { useGlobalStore } from "../service/useGlobalStore"
 
 
 //TODO: calcular idade automáticamente.
@@ -28,6 +29,11 @@ const text = {
 
 
 const CadastraPaciente = ({ }) => {
+
+
+
+
+
 
     const navigate = useNavigate();
     const goToPage = (page: string) => { navigate(`/pacientes/${page}`) }
@@ -106,7 +112,6 @@ const CadastraPaciente = ({ }) => {
         goToPage("")
 
     }
-
 
 
 

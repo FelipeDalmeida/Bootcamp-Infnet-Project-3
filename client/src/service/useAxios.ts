@@ -1,19 +1,43 @@
 import Axios from 'axios'
-import {configure} from 'axios-hooks'
-export {default as useAxios} from 'axios-hooks'
+import { configure } from 'axios-hooks'
+import { AuthToken } from '../authToken'
+import { browserHistory } from '../browserHistory'
+import { useGlobalStore } from './useGlobalStore'
+export { default as useAxios } from 'axios-hooks'
 
-const axios=Axios.create({
+const axios = Axios.create({
     baseURL: "http://127.0.0.1:8080",
 })
 
-axios.get('')
+//axios.get('')
 //axios.post('')
 
-configure({axios});
+axios.interceptors.request.use((config) => {
+    const token = AuthToken.get();
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
 
-//Para usar axios-hooks:
-// import {useAxios} from './service/useAxios.ts'
-// const [{data : tipo}] = useAxios<tipo[]>({
-//  url: /diretorio
-//  method    
-//})
+    return config;
+})
+
+axios.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        console.log(`Error: ${error}`)
+        const status: number = error.request.status;
+        console.log(`Status: ${status}`)
+        if (status >= 401) {
+            AuthToken.remove();
+            console.log("Token Expirado")
+            const setUser = useGlobalStore((state) => state.setUser);
+            setUser({isAuthenticated:false})
+            browserHistory.push("/login")
+        }
+    }
+)
+
+configure({ axios });
+
