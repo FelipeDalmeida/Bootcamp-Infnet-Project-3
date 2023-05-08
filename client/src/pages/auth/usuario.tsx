@@ -2,6 +2,9 @@ import useAxios from "axios-hooks";
 import { User } from "../../types/types";
 import { useEffect, useState } from "react";
 import { stringify } from "querystring";
+import { useGlobalStore } from "../../service/useGlobalStore";
+import { AuthToken } from "../../service/authToken";
+import { LoadAuthUser } from "../../service/isAuth";
 
 const text = {
     labelNome: "Nome",
@@ -18,11 +21,9 @@ const text = {
 }
 
 
-const Usuario = ({ }) => {
+const Usuario = () => {
 
-
-
-
+  
     const [
         {
             data: infoUsuario
@@ -39,13 +40,19 @@ const Usuario = ({ }) => {
 
 
     useEffect(() => {
+
+
+
         getUsuario().then(response => {
             console.log(response.data)
         })
 
     }, [])
 
-    return <>{infoUsuario?JSON.stringify(infoUsuario):""}</>
+    return <>
+    <LoadAuthUser/>
+    {infoUsuario?JSON.stringify(infoUsuario):""}
+    </>
 }
 
 export default Usuario

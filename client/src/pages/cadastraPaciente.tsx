@@ -12,6 +12,7 @@ import { pacienteSchema } from "../schemas/pacienteSchema"
 import { ZodError } from "zod"
 import { setFormErrorsValid } from "../service/formValidation"
 import { useGlobalStore } from "../service/useGlobalStore"
+import { LoadAuthUser } from "../service/isAuth"
 
 
 //TODO: calcular idade automáticamente.
@@ -30,7 +31,10 @@ const text = {
 
 const CadastraPaciente = ({ }) => {
 
-
+    // const user = useGlobalStore((state) => state.user);
+    //  useEffect(()=>{
+    //     console.log(user)
+    //  })
 
 
 
@@ -133,6 +137,7 @@ const CadastraPaciente = ({ }) => {
 
 
     return <div className={"md:h-auto p-2 grid grid-cols-12 gap-4 "}>
+         <LoadAuthUser/>
         <form
             className={"sm:relative md:my-10 md:pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border  col-start-0 col-span-12 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 xxl:col-start-4 xxl:col-span-6"}>
             <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={"Cadastro"} />

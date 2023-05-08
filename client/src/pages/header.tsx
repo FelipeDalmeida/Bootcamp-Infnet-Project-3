@@ -18,7 +18,9 @@ const Header = () => {
     //const anchor2 = [<Button className={"mt-6 md:mt-1"} title={"Logout"} onClick={() => setIsAuth(false)} />,<div className={" self-center"}>{user}</div>]
     const anchor2 = [<Link to='/usuario'>{"Usuario"}</Link>,<Button className={"mt-6 md:mt-1"} title={"Logout"} onClick={() => logOut()} />]
 
-    return <Nav anchor={anchor} anchor2={anchor2} />
+    return <>
+    <Nav anchor={anchor} anchor2={anchor2} />
+    </>
 }
 
 export default Header

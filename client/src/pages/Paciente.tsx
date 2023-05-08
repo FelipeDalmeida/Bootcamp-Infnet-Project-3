@@ -15,6 +15,7 @@ import Select from "../components/Select"
 import { useZorm } from "react-zorm";
 import { pacienteSchema } from "../schemas/pacienteSchema"
 import { setFormErrorsValid } from "../service/formValidation"
+import { LoadAuthUser } from "../service/isAuth"
 
 const text = {
     labelNome: "Nome",
@@ -177,6 +178,7 @@ const PacientePage = ({ }) => {
     ]
 
     return <> <div className={"md:h-auto p-2 grid grid-cols-12 gap-4 "}>
+         <LoadAuthUser/>
         <div className={"relative my-0 md:my-10 md:pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border col-start-0 col-span-12 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 xxl:col-start-4 xxl:col-span-6"}>
             <form className={""}>
                 <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={`${form.nome}`} />

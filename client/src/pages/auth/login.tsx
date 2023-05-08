@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { useAxios } from "../../service/useAxios"
 import { criaNome } from "../../service/stringManipulation"
 import { User } from "../../types/types"
-import { AuthToken } from "../../authToken"
+import { AuthToken } from "../../service/authToken"
 import { useGlobalStore } from "../../service/useGlobalStore"
 
 
@@ -58,14 +58,14 @@ const Login = () => {
 
         await realizaLogin().then(response => {
             if (response) {
-                
+                console.log(response.data.user)
                 AuthToken.set(response.data.accessToken);
 
 
                 setLoginData({ ...loginData, error: "" })
-                setUser({ ...user, isAuthenticated: true });
+                setUser({ ...user, isAuthenticated: true,...response.data.user });
 
-                // goToPage("/cadastro")
+                goToPage("/usuario")
                 // const nome = criaNome(loginData.email)
 
                 

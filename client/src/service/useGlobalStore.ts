@@ -13,6 +13,7 @@ export const useGlobalStore = create<GlobalStore>((set, get) => ({
     isAuthenticated: false,
     nome: "",
     email: "",
+    id:0,
   },
   setUser(user) {
     set({ user: { ...get().user, ...user } });

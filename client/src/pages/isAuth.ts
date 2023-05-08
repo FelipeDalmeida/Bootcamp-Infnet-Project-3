@@ -1,1 +1,0 @@
-export const isAuth=()=>console.log("oi")
