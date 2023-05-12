@@ -11,7 +11,7 @@ import { criaNome } from "../../service/stringManipulation"
 import { User } from "../../types/types"
 import { AuthToken } from "../../service/authToken"
 import { useGlobalStore } from "../../service/useGlobalStore"
-
+import { login } from "../../service/api/login"
 
 
 const text = {
@@ -28,59 +28,68 @@ const Login = () => {
 
     const setUser = useGlobalStore((state) => state.setUser);
     const [loginData, setLoginData] = useState({ email: "", password: "", error: "" })
-    const [
-        {
-            data: { accessToken, user } = {
-                accessToken: "",
-                user: {}
-            }
-        },
-        realizaLogin] = useAxios<{ accessToken: string; user: Partial<User>; }>(
-            {
-                url: '/auth/login',
-                method: 'post',
-                data: loginData,
-
-            },
-
-            {
-                manual: true,
-            }
-        )
 
 
 
 
-    const sendLogin = async (e:React.FormEvent<HTMLFormElement>) => {
+
+    // const sendLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     const { email, password } = loginData;
+    //     const response= await login(email, password);
+    //     if (response !== null) {
+    //         const { accessToken, user } = response;
+    //         AuthToken.set(accessToken);
+    //         setUser({ ...user, isAuthenticated: true });
+    //         navigate("/usuario");
+    //       } else {
+    //         setLoginData({ ...loginData, error: "Erro de Login" })
+    //       }
+    // }
+
+        const sendLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-
-
-        await realizaLogin().then(response => {
-            if (response) {
-                console.log(response.data.user)
-                AuthToken.set(response.data.accessToken);
-
-
-                setLoginData({ ...loginData, error: "" })
-                setUser({ ...user, isAuthenticated: true,...response.data.user });
-
-                goToPage("/usuario")
-                // const nome = criaNome(loginData.email)
-
-                
-                // setUser(nome)
-            }
-        })
-            .catch((error) => {
-                if (error) {
-                    setLoginData({ ...loginData, error: "Erro de Login" })
-                    console.log(error)
-
-                }
-            })
-
+        const { email, password } = loginData;
+        const response= await login(email, password);
+        if (response !== null) {
+            const { accessToken, user } = response;
+            AuthToken.set(accessToken);
+            setUser({ ...user, isAuthenticated: true });
+            navigate("/usuario");
+          } else {
+            setLoginData({ ...loginData, error: "Erro de Login" })
+          }
     }
+
+
+    // const sendLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+
+    
+    //     await realizaLogin().then(response => {
+    //         if (response.status===200) {
+    //             console.log(response.data.user)
+    //             AuthToken.set(response.data.accessToken);
+
+
+    //             setLoginData({ ...loginData, error: "" })
+    //             setUser({ ...user, isAuthenticated: true, ...response.data.user });
+
+    //             goToPage("/")
+
+    //         }
+
+    //     })
+    //     .catch((error) => {
+    //             console.log("Erro",error)
+
+    //             setLoginData({ ...loginData, error: "Erro de Login" })
+
+
+
+    //         })
+
+    // }
 
 
     const inputs = [
@@ -95,7 +104,7 @@ const Login = () => {
             <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={text.labelTitle} />
             <CriaForm inputs={inputs} className={"my-2 grid-cols-1"} />
             <div className={"mx-10 "}>
-                <Button title={text.labelButton} className={"m-0 my-3 p-2 w-full "} onClick={(e)=>sendLogin(e)} />
+                <Button title={text.labelButton} className={"m-0 my-3 p-2 w-full "} onClick={(e) => sendLogin(e)} />
                 <Button type={"button"} title={text.labelButtonRegister} className={"m-0 my-3 p-2 w-full "} onClick={() => { goToPage('/registro') }} />
             </div>
         </div>
