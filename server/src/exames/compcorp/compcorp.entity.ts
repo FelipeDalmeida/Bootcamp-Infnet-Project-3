@@ -1,5 +1,6 @@
 import { PrimaryKey, Property, Entity, ManyToOne } from "@mikro-orm/core";
 import { Paciente } from "../../pacientes/paciente.entity";
+import { User } from "src/user/user.entity";
 
 @Entity()
 export class Compcorp {
@@ -34,4 +35,7 @@ export class Compcorp {
         onDelete:"cascade"
     })
     paciente:Paciente
+
+    @ManyToOne(()=>User)
+    user:User
 }

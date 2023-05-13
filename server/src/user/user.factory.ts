@@ -1,6 +1,6 @@
 import { Factory, Faker } from '@mikro-orm/seeder';
 import { User } from './user.entity';
-
+import * as bcrypt from 'bcrypt'
 
 
 export class UserFactory extends Factory<User>{
@@ -10,7 +10,7 @@ export class UserFactory extends Factory<User>{
       return {
         nome:faker.name.fullName(),
         email:faker.internet.email(),
-        password:faker.internet.password(),
+        password:bcrypt.hashSync('arnold',10),
       };
     }
 

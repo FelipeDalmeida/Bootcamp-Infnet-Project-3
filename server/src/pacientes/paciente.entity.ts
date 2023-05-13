@@ -1,6 +1,7 @@
-import { PrimaryKey, Property, Entity, OneToMany, Collection } from "@mikro-orm/core";
+import { PrimaryKey, Property, Entity, OneToMany, Collection, ManyToOne } from "@mikro-orm/core";
 import { Compcorp } from "../exames/compcorp/compcorp.entity";
 import { Avantropometrica } from "src/exames/avantropometrica/avantropometrica.entity";
+import { User } from "src/user/user.entity";
 
 @Entity()
 export class Paciente {
@@ -36,4 +37,7 @@ export class Paciente {
 
     @OneToMany(()=>Avantropometrica,(avantropometrica)=>avantropometrica.paciente)
     avantropometrica=new Collection<Avantropometrica>(this)
+
+    @ManyToOne(()=>User)
+    user:User
 }

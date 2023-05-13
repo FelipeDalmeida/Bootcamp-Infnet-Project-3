@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { PacientesModule } from './pacientes/pacientes.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
@@ -11,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
+    ConfigModule.forRoot(),
     PacientesModule,
     ExamesModule,
     UserModule,

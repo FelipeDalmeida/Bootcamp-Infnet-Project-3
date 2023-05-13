@@ -18,7 +18,7 @@ export function LoadAuthUser() {  //em cada pagina irá verificar se o token est
        , 
         getUsuario] = useAxios<Partial<User>>(
             {
-                url: `/auth/user`,
+                url: `/users/myself`,
                 method: "get",
             },
             {
@@ -40,7 +40,11 @@ export function LoadAuthUser() {  //em cada pagina irá verificar se o token est
 
       if (!token) {
 
-        setUser({ isAuthenticated: false });
+        setUser({
+            id:0,
+            email:"",
+            nome:"",
+            isAuthenticated: false });
         goToPage("/login")
       }
    

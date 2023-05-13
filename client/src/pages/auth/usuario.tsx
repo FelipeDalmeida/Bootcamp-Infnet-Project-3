@@ -30,7 +30,7 @@ const Usuario = () => {
         }, 
         getUsuario] = useAxios<Partial<User>>(
             {
-                url: `/auth/user`,
+                url: `/users/myself`,
                 method: "get",
             },
             {

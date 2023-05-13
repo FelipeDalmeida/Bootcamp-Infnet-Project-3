@@ -10,13 +10,14 @@ export class AuthService {
         private readonly jwtService:JwtService
     ){}
     async login(loginCredentialsDto:loginCredentialsDto){
+
         const user=await this.userService.findByEmail(loginCredentialsDto.email)
 
-        if(user?.id===undefined || user?.password!==loginCredentialsDto.password){
+        if(user?.id===undefined){
             throw new UnauthorizedException();
         }
 
-        if( user?.password===loginCredentialsDto.password){
+        if(await user?.comparePassword(loginCredentialsDto.password)){
             const payload = { id: user.id, email: user.email };
             const accessToken = await this.jwtService.signAsync(payload )
             return {

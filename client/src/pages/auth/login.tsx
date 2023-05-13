@@ -55,7 +55,7 @@ const Login = () => {
             const { accessToken, user } = response;
             AuthToken.set(accessToken);
             setUser({ ...user, isAuthenticated: true });
-            navigate("/usuario");
+            navigate("/cadastro");
           } else {
             setLoginData({ ...loginData, error: "Erro de Login" })
           }

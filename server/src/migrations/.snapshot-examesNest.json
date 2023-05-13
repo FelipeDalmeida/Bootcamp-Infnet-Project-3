@@ -12,6 +12,79 @@
           "nullable": false,
           "mappedType": "integer"
         },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "nome": {
+          "name": "nome",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 0,
+          "mappedType": "datetime"
+        }
+      },
+      "name": "user",
+      "indexes": [
+        {
+          "columnNames": [
+            "email"
+          ],
+          "composite": false,
+          "keyName": "user_email_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
         "nome": {
           "name": "nome",
           "type": "varchar(255)",
@@ -84,10 +157,28 @@
           "nullable": false,
           "length": 0,
           "mappedType": "datetime"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
         }
       },
       "name": "paciente",
       "indexes": [
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "composite": false,
+          "keyName": "paciente_user_id_index",
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "PRIMARY",
           "columnNames": [
@@ -99,7 +190,20 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {}
+      "foreignKeys": {
+        "paciente_user_id_foreign": {
+          "constraintName": "paciente_user_id_foreign",
+          "columnNames": [
+            "user_id"
+          ],
+          "localTableName": "paciente",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "user",
+          "updateRule": "cascade"
+        }
+      }
     },
     {
       "columns": {
@@ -192,6 +296,15 @@
           "primary": false,
           "nullable": false,
           "mappedType": "integer"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
         }
       },
       "name": "compcorp",
@@ -202,6 +315,15 @@
           ],
           "composite": false,
           "keyName": "compcorp_paciente_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "composite": false,
+          "keyName": "compcorp_user_id_index",
           "primary": false,
           "unique": false
         },
@@ -228,6 +350,18 @@
           ],
           "referencedTableName": "paciente",
           "deleteRule": "cascade",
+          "updateRule": "cascade"
+        },
+        "compcorp_user_id_foreign": {
+          "constraintName": "compcorp_user_id_foreign",
+          "columnNames": [
+            "user_id"
+          ],
+          "localTableName": "compcorp",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "user",
           "updateRule": "cascade"
         }
       }
@@ -341,6 +475,15 @@
           "primary": false,
           "nullable": false,
           "mappedType": "integer"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
         }
       },
       "name": "avantropometrica",
@@ -351,6 +494,15 @@
           ],
           "composite": false,
           "keyName": "avantropometrica_paciente_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "composite": false,
+          "keyName": "avantropometrica_user_id_index",
           "primary": false,
           "unique": false
         },
@@ -378,81 +530,20 @@
           "referencedTableName": "paciente",
           "deleteRule": "cascade",
           "updateRule": "cascade"
-        }
-      }
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "mappedType": "integer"
         },
-        "email": {
-          "name": "email",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "nome": {
-          "name": "nome",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "password": {
-          "name": "password",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "length": 0,
-          "mappedType": "datetime"
-        }
-      },
-      "name": "user",
-      "indexes": [
-        {
+        "avantropometrica_user_id_foreign": {
+          "constraintName": "avantropometrica_user_id_foreign",
           "columnNames": [
-            "email"
+            "user_id"
           ],
-          "composite": false,
-          "keyName": "user_email_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
+          "localTableName": "avantropometrica",
+          "referencedColumnNames": [
             "id"
           ],
-          "composite": false,
-          "primary": true,
-          "unique": true
+          "referencedTableName": "user",
+          "updateRule": "cascade"
         }
-      ],
-      "checks": [],
-      "foreignKeys": {}
+      }
     }
   ]
 }
