@@ -13,13 +13,13 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class PacientesController {
   constructor(private readonly pacientesService: PacientesService) {}
 
-  @UseGuards(AuthGuard)
+
   @Post()
   create(@Body() createPacienteDto: CreatePacienteDto) {
     return this.pacientesService.create(createPacienteDto);
   }
 
-  @UseGuards(AuthGuard)
+  
   @Get()
   async findAll(
     @Query(
@@ -34,19 +34,19 @@ export class PacientesController {
     return await this.pacientesService.findAll(ListPacientesDto);
   }
 
-  @UseGuards(AuthGuard)
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.pacientesService.findOne(+id);
   }
 
-  @UseGuards(AuthGuard)
+ 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePacienteDto: UpdatePacienteDto) {
     return this.pacientesService.update(+id, updatePacienteDto);
   }
 
-  @UseGuards(AuthGuard)
+  
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.pacientesService.remove(+id);

@@ -1,8 +1,9 @@
-import { Entity, Property, PrimaryKey, DateTimeType, Unique, OneToMany, Collection } from "@mikro-orm/core";
+import { Entity, Property, PrimaryKey, DateTimeType, Unique, OneToMany, Collection, BeforeCreate } from "@mikro-orm/core";
 import * as bcrypt from 'bcrypt'; 
 import { Avantropometrica } from "src/exames/avantropometrica/avantropometrica.entity";
 import { Compcorp } from "src/exames/compcorp/compcorp.entity";
 import { Paciente } from "src/pacientes/paciente.entity";
+
 
 
 @Entity()
@@ -35,5 +36,10 @@ export class User{
     async comparePassword(password:string){
         const isPasswordEqual = await bcrypt.compare(password,this.password);
         return isPasswordEqual;
+    }
+
+    @BeforeCreate()
+    async hashPassword(){
+        this.password=await bcrypt.hash(this.password,10)
     }
 }

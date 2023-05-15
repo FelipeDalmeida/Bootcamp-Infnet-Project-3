@@ -8,29 +8,38 @@ import Logo from '../../assets/img/logo192.png'
 import { useNavigate } from "react-router-dom"
 import { useAxios } from "../../service/useAxios"
 import { criaNome } from "../../service/stringManipulation"
+import { AuthToken } from "../../service/authToken"
+import { useGlobalStore } from "../../service/useGlobalStore"
+//import { register } from "../../service/api/register"
+
+//@TODO: Deletar ou o useAxios ou o API
 
 const text = {
     labelEmail: "E-mail",
     labelSenha: "Senha",
-    labelEmailCheck: "Repita seu e-mail",
-    labelSenhaCheck: "Repita sua senha",
+    labelNome: "Nome",
+    labelConfirmEmail: "Confirme o e-mail",
     labelTitle: "Registro",
     labelButton: "Registrar",
     labelButtonLogin: "Ir para Login"
 }
 
-const Register = ({ setIsAuth,setUser }: any) => {
+const Register = () => {
     const navigate = useNavigate();
     const goToPage = (page: string) => { navigate(`${page}`) }
 
+    const setUser = useGlobalStore((state) => state.setUser);
+    const [registro, setRegistro] = useState({ nome: "", email: "", password: "", error: "", confirmEmail: "", emailError: "" })
 
-    const [registro, setRegistro] = useState({ email: "", senha: "", emailCheck: "", emailError: "", senhaCheck: "", senhaError: "", error: "" })
-
-    const [{ data: response }, realizaRegistro] = useAxios(
+    const [, realizaRegistro] = useAxios(
         {
             url: '/auth/register',
             method: 'post',
-            data: registro,
+            data: {
+                nome: registro.nome,
+                email: registro.email,
+                password: registro.password
+            },
 
         },
 
@@ -40,31 +49,60 @@ const Register = ({ setIsAuth,setUser }: any) => {
     )
 
 
-    const registar = async () => {
+    const registar = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-
-        await realizaRegistro().then(response => { 
-            if (response) { 
-                setIsAuth(true); 
-                const nome=criaNome(registro.email)
-                setUser(nome)
-                goToPage("/") 
-            } })
-            .catch((error) => {
+        if (registro.email === registro.confirmEmail) {
+            setRegistro({ ...registro, emailError: "" })
+            await realizaRegistro().then(response => {
+                if (response) {
+                    const { accessToken, user } = response.data;
+                    AuthToken.set(accessToken);
+                    setUser({ ...user, isAuthenticated: true });
+                    goToPage("/cadastro")
+                }
+            }).catch((error) => {
+                console.log(error, error)
                 if (error) {
                     setRegistro({ ...registro, error: "Erro no registro" })
-
                 }
             })
+        } else {
+            setRegistro({ ...registro, emailError: "E-mail diferente!" })
+        }
+
+        // if(registro.email===registro.confirmEmail){
+        //     setRegistro({ ...registro, emailError: "" })
+
+        //     const response = await register({
+        //         nome:registro.nome,
+        //         email:registro.email,
+        //         password:registro.password
+        //     })
+
+        //     if(response.success &&response.accessToken){
+        //         const { accessToken, user } = response;
+        //         AuthToken.set(accessToken)
+        //         setUser({ ...user, isAuthenticated: true });
+        //         goToPage("/cadastro") 
+        //     } else if(!response){
+        //         setRegistro({ ...registro, error: "Erro no registro" })
+        //     }
+        // } else {
+        //     setRegistro({ ...registro, emailError: "E-mail diferente!" })
+        // }
+
+
 
 
     }
 
     const inputs = [
-        <Input label={text.labelEmail} type={"email"} value={registro.email} onChange={(e) => setRegistro({ ...registro, email: e.target.value })} error={registro.emailError} />,
-        // <Input label={text.labelEmailCheck} type={"email"} value={registro.emailCheck} onChange={(e) => setRegistro({ ...registro, emailCheck: e.target.value })} />,
-        <Input label={text.labelSenha} type={"password"} value={registro.senha} onChange={(e) => setRegistro({ ...registro, senha: e.target.value })} error={registro.senhaError} />,
-        // <Input label={text.labelSenhaCheck} type={"password"} value={registro.senhaCheck} onChange={(e) => setRegistro({ ...registro, senhaCheck: e.target.value })} error={registro.error} />
+        <Input label={text.labelNome} type={"email"} value={registro.nome} onChange={(e) => setRegistro({ ...registro, nome: e.target.value })} />,
+        <Input label={text.labelEmail} type={"email"} value={registro.email} onChange={(e) => setRegistro({ ...registro, email: e.target.value })} />,
+        <Input label={text.labelConfirmEmail} type={"email"} value={registro.confirmEmail} onChange={(e) => setRegistro({ ...registro, confirmEmail: e.target.value })} error={registro.emailError} />,
+        <Input label={text.labelSenha} type={"password"} value={registro.password} onChange={(e) => setRegistro({ ...registro, password: e.target.value })} error={registro.error} />,
+
     ]
 
     return <div className={"h-auto p-2 grid grid-cols-12 gap-4 "}>

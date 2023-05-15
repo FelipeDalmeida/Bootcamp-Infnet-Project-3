@@ -1,7 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { loginCredentialsDto } from './dto/login-credentials.dto';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -33,5 +34,29 @@ export class AuthService {
             throw new UnauthorizedException();
         }
  
+    }
+
+    async createAcount(createuserDto:CreateUserDto){
+        const verificaEmail=await this.userService.findByEmail(createuserDto.email)
+        if(verificaEmail){
+            throw new BadRequestException({
+                errors:{
+                    email:"Email já cadastrado."
+                },
+                success:false
+            })
+        }
+
+        await this.userService.create(createuserDto);
+        const {user,accessToken } = await this.login({
+            email:createuserDto.email,
+            password:createuserDto.password, 
+         })
+
+        return {
+            user,
+            accessToken,
+            success:true
+        }
     }
 }

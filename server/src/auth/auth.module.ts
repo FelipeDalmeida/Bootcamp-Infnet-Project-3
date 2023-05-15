@@ -19,7 +19,7 @@ import { authConstants } from './auth.constants';
     JwtModule.register({
       global: true,
       secret: jwt,
-      signOptions: { expiresIn: '5s' },
+      signOptions: { expiresIn: '1y' },
     }),],
     exports:[AuthService],
 })
