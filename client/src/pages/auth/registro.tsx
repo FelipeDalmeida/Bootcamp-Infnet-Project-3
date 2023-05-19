@@ -10,7 +10,7 @@ import { useAxios } from "../../service/useAxios"
 import { criaNome } from "../../service/stringManipulation"
 import { AuthToken } from "../../service/authToken"
 import { useGlobalStore } from "../../service/useGlobalStore"
-//import { register } from "../../service/api/register"
+import { register } from "../../service/api/register"
 
 //@TODO: Deletar ou o useAxios ou o API
 
@@ -31,66 +31,71 @@ const Register = () => {
     const setUser = useGlobalStore((state) => state.setUser);
     const [registro, setRegistro] = useState({ nome: "", email: "", password: "", error: "", confirmEmail: "", emailError: "" })
 
-    const [, realizaRegistro] = useAxios(
-        {
-            url: '/auth/register',
-            method: 'post',
-            data: {
-                nome: registro.nome,
-                email: registro.email,
-                password: registro.password
-            },
+    // const [, realizaRegistro] = useAxios(
+    //     {
+    //         url: '/auth/register',
+    //         method: 'post',
+    //         data: {
+    //             nome: registro.nome,
+    //             email: registro.email,
+    //             password: registro.password
+    //         },
 
-        },
+    //     },
 
-        {
-            manual: true,
-        }
-    )
+    //     {
+    //         manual: true,
+    //     }
+    // )
 
 
     const registar = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (registro.email === registro.confirmEmail) {
+    //     if (registro.email === registro.confirmEmail) {
+    //         setRegistro({ ...registro, emailError: "" })
+    //         await realizaRegistro().then(response => {
+    //             console.log("response",response)
+    //             if (response) {
+    //                 console.log("response",response)
+    //                 const { accessToken, user } = response.data;
+    //                 AuthToken.set(accessToken);
+    //                 setUser({ ...user, isAuthenticated: true });
+    //                 goToPage("/cadastro")
+    //             }
+    //         }).catch((error) => {
+    //             console.log(error, error)
+    //             if (error) {
+    //                 setRegistro({ ...registro, error: "Erro no registro" })
+    //             }
+    //         })
+    //     } else {
+    //         setRegistro({ ...registro, emailError: "E-mail diferente!" })
+    //     }
+
+        if(registro.email===registro.confirmEmail){
+            
             setRegistro({ ...registro, emailError: "" })
-            await realizaRegistro().then(response => {
-                if (response) {
-                    const { accessToken, user } = response.data;
-                    AuthToken.set(accessToken);
-                    setUser({ ...user, isAuthenticated: true });
-                    goToPage("/cadastro")
-                }
-            }).catch((error) => {
-                console.log(error, error)
-                if (error) {
-                    setRegistro({ ...registro, error: "Erro no registro" })
-                }
+
+            const response = await register({
+                nome:registro.nome,
+                email:registro.email,
+                password:registro.password
             })
+            console.log("response",response)
+
+            if(response.success && response.accessToken){
+                const { accessToken, user } = response;
+                AuthToken.set(accessToken)
+                setUser({ ...user, isAuthenticated: true });
+                goToPage("/cadastro") 
+
+            } else {
+                setRegistro({ ...registro, error: "Erro no registro" })
+            }
         } else {
             setRegistro({ ...registro, emailError: "E-mail diferente!" })
         }
-
-        // if(registro.email===registro.confirmEmail){
-        //     setRegistro({ ...registro, emailError: "" })
-
-        //     const response = await register({
-        //         nome:registro.nome,
-        //         email:registro.email,
-        //         password:registro.password
-        //     })
-
-        //     if(response.success &&response.accessToken){
-        //         const { accessToken, user } = response;
-        //         AuthToken.set(accessToken)
-        //         setUser({ ...user, isAuthenticated: true });
-        //         goToPage("/cadastro") 
-        //     } else if(!response){
-        //         setRegistro({ ...registro, error: "Erro no registro" })
-        //     }
-        // } else {
-        //     setRegistro({ ...registro, emailError: "E-mail diferente!" })
-        // }
 
 
 

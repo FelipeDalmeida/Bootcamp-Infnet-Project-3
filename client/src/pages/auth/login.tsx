@@ -11,7 +11,7 @@ import { criaNome } from "../../service/stringManipulation"
 import { User } from "../../types/types"
 import { AuthToken } from "../../service/authToken"
 import { useGlobalStore } from "../../service/useGlobalStore"
-//import { login } from "../../service/api/login"
+import { login } from "../../service/api/login"
 
 //@TODO: Deletar ou o useAxios ou o API
 
@@ -31,56 +31,58 @@ const Login = () => {
     const [loginData, setLoginData] = useState({ email: "", password: "", error: "" })
 
 
-    const [, realizaLogin] = useAxios(
-        {
-            url: '/auth/login',
-            method: 'post',
-            data: {
-                email: loginData.email,
-                password: loginData.password
-            },
-        },
-        {
-            manual: true,
-        }
-    )
-
-
-    const sendLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-
-        e.preventDefault();
-        const { email, password } = loginData;
-        await realizaLogin().then(response => {
-            if (response.status === 200) {
-                console.log(response.data.user)
-                AuthToken.set(response.data.accessToken);
-
-                setUser({ ...response.data.user, isAuthenticated: true });
-                setLoginData({ ...loginData, error: "" })
-                goToPage("/cadastro")
-            }
-
-        }).catch((error) => {
-            console.log("Erro", error)
-
-            setLoginData({ ...loginData, error: "Erro de Login" })
-        })
-    }
+    // const [, realizaLogin] = useAxios(
+    //     {
+    //         url: '/auth/login',
+    //         method: 'post',
+    //         data: {
+    //             email: loginData.email,
+    //             password: loginData.password
+    //         },
+            
+    //     },
+    //     {
+    //         manual: true,
+    //     }
+    // )
 
 
     // const sendLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+
     //     e.preventDefault();
     //     const { email, password } = loginData;
-    //     const response = await login(email, password);
-    //     if (response !== null) {
-    //         const { accessToken, user } = response;
-    //         AuthToken.set(accessToken);
-    //         setUser({ ...user, isAuthenticated: true });
-    //         navigate("/cadastro");
-    //     } else {
+    //     await realizaLogin().then(response => {
+    //         if (response.status === 200) {
+    //             console.log(response.data.user)
+    //             AuthToken.set(response.data.accessToken);
+
+    //             setUser({ ...response.data.user, isAuthenticated: true });
+    //             setLoginData({ ...loginData, error: "" })
+    //             goToPage("/cadastro")
+    //         }
+
+    //     }).catch((error) => {
+    //         console.log("Erro", error)
+
     //         setLoginData({ ...loginData, error: "Erro de Login" })
-    //     }
+    //     })
     // }
+
+
+    const sendLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const { email, password } = loginData;
+        const response = await login(email, password);
+        if (response !== null) {
+            const { accessToken, user } = response;
+            AuthToken.set(accessToken);
+            setUser({ ...user, isAuthenticated: true });
+            navigate("/cadastro");
+        } else {
+            console.log("Erro", response)
+            setLoginData({ ...loginData, error: "Erro de Login" })
+        }
+    }
 
 
 

@@ -20,20 +20,20 @@ axios.interceptors.request.use((config) => {
     return config;
 })
 
-// axios.interceptors.response.use(
-//     (response) => {
-//         return response;
-//     },
-//     (error) => {
+axios.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
     
-//         const status = error.request.status;
-//         if (status >= 401) {
-//             AuthToken.remove();
-//             console.log("Token Expirado")
-//             browserHistory.push("/login")
-//         }
-//     }
-// )
+        const status = error.request.status;
+        if (status === 401 || status === 500) {
+            AuthToken.remove();
+            console.log("Token Expirado")
+            browserHistory.push("/login")
+        }
+    }
+)
 
 configure({ axios });
 

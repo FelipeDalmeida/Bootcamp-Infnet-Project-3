@@ -8,7 +8,7 @@ type CreateAccountInput = {
 };
 
 type CreateAccountOutput = {
-  success: true;
+  success: boolean;
   accessToken?: string;
   user?: User;
 };
@@ -17,5 +17,15 @@ export async function register(
   createAccountInput: CreateAccountInput
 ): Promise<CreateAccountOutput> {
   const response = await api.post("/auth/register", createAccountInput);
-  return response.data;
+  
+  if(response){
+    return {
+      ...response.data,
+      success: true
+    }
+  }
+
+  return {
+   success: false
+  }
 }
