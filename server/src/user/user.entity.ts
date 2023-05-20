@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { Avantropometrica } from "src/exames/avantropometrica/avantropometrica.entity";
 import { Compcorp } from "src/exames/compcorp/compcorp.entity";
 import { Paciente } from "src/pacientes/paciente.entity";
-
+import { Email } from "src/email/email.entity";
 
 
 @Entity()
@@ -14,6 +14,9 @@ export class User{
     @Unique()
     @Property()
     email:string;
+
+    @Property()
+    isEmailVerified:boolean = false;
 
     @Property()
     nome:string;
@@ -32,6 +35,9 @@ export class User{
 
     @OneToMany(()=>Compcorp,(compcorp)=>compcorp.user)
     compcorp=new Collection<Compcorp>(this)
+
+    @OneToMany(()=>Email,(email)=>email.user)
+    emailVerify =new Collection<Email>(this)
 
     async comparePassword(password:string){
         const isPasswordEqual = await bcrypt.compare(password,this.password);

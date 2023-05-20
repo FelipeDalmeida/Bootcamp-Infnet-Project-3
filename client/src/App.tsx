@@ -5,7 +5,7 @@ import './App.css';
 import Header from './pages/header';
 import Load from './components/load/load';
 import { useGlobalStore } from './service/useGlobalStore';
-
+import {EmailVerificationModal} from './service/EmailVerificationModal'
 
 
 
@@ -35,6 +35,7 @@ function App() {
       <Router history={browserHistory}>
 
         <Suspense fallback={<Load />}>
+     
           <Routes>
 
             <Route path="/" element={<Login />} />
@@ -52,6 +53,7 @@ function App() {
         <Suspense fallback={<Load />}>
 
           <Header />
+          <EmailVerificationModal/>
           <Routes>
             <Route path="*" element={<Usuario />} />
             <Route path="/login" element={<Login />} />

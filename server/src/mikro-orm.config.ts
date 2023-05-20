@@ -2,9 +2,10 @@ import { Avantropometrica } from './exames/avantropometrica/avantropometrica.ent
 import { Compcorp } from './exames/compcorp/compcorp.entity';
 import { Paciente } from './pacientes/paciente.entity';
 import { User } from './user/user.entity';
+import { Email } from './email/email.entity';
 
 export default {
-    entities:[Paciente,User,Avantropometrica,Compcorp],
+    entities:[Paciente,User,Avantropometrica,Compcorp,Email],
     port:3306,
     dbName:"examesNest",
     host:"127.0.0.1",

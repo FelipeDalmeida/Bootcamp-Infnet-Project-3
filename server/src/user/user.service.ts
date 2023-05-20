@@ -25,4 +25,10 @@ export class UserService {
         return user;
     }
 
+    async setEmailVerified(userId:number){
+        const user=await this.userRepository.findOne(userId)
+        user.isEmailVerified=true
+        await this.userRepository.flush()
+   }
+
 }

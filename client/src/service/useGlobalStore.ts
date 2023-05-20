@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import type { User } from "../types/types";
 
-type StoreUser = User & { isAuthenticated: boolean };
+type StoreUser = User & { isAuthenticated: boolean, isEmailVerified:boolean };
 
 type GlobalStore = {
   user: StoreUser;
@@ -11,6 +11,7 @@ type GlobalStore = {
 export const useGlobalStore = create<GlobalStore>((set, get) => ({
   user: {
     isAuthenticated: false,
+    isEmailVerified:false,
     nome: "",
     email: "",
     id:0,

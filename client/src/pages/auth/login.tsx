@@ -77,6 +77,8 @@ const Login = () => {
             const { accessToken, user } = response;
             AuthToken.set(accessToken);
             setUser({ ...user, isAuthenticated: true });
+            console.log("LoginUser",user)
+            console.log("LoginResponse",response)
             navigate("/cadastro");
         } else {
             console.log("Erro", response)

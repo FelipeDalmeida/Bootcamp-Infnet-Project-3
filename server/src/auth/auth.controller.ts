@@ -2,6 +2,9 @@ import { Controller, Post, Body, HttpCode, HttpStatus, Get, UseGuards, Req } fro
 import { loginCredentialsDto } from './dto/login-credentials.dto';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { AuthGuard } from './auth.guard';
+import { verify } from 'crypto';
+import { VerifyEmailDto } from './dto/verify-email.dto';
 
 
 @Controller('auth')
@@ -21,4 +24,19 @@ export class AuthController {
     createAccount(@Body() createUserDto:CreateUserDto){
         return this.authService.createAcount(createUserDto)
     }
+
+    @UseGuards(AuthGuard)
+    @Post('email-verification-code')
+    async reqEmailVerificationCode(@Body() id:number){
+        console.log("userId",id)
+        return await this.authService.reqEmailVerificationCode(id);
+
+    }
+
+    @UseGuards(AuthGuard)
+    @Post('verify-email')
+    verifyEmail(@Body() VerifyEmailDto){
+        return this.authService.verifyEmail(VerifyEmailDto);
+    }
+
 }

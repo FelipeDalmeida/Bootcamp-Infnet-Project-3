@@ -10,12 +10,12 @@ import { User } from "../types/types";
 export function LoadAuthUser() {  //em cada pagina irá verificar se o token está valido 
     const user = useGlobalStore((state) => state.user);
     const setUser = useGlobalStore((state) => state.setUser);
-    const [token,setToken]=useState(AuthToken.get())
+    const [token, setToken] = useState(AuthToken.get())
     const navigate = useNavigate();
     const goToPage = (page: string) => { navigate(`${page}`) }
-    
+
     const [
-       , 
+        ,
         getUsuario] = useAxios<Partial<User>>(
             {
                 url: `/users/myself`,
@@ -29,26 +29,32 @@ export function LoadAuthUser() {  //em cada pagina irá verificar se o token est
     useEffect(() => {
         setToken(AuthToken.get());
 
-        if(token || user.isAuthenticated){
+        if (token || user.isAuthenticated) {
 
-            getUsuario().then(usuario=>{
-                if(usuario.data.id===user.id){
-                    setUser({ ...usuario, isAuthenticated: true });
+            getUsuario().then(usuario => {
+                if (usuario.data.id === user.id) {
+                    setUser({
+                        ...usuario, 
+                        isAuthenticated: true 
+                    });
+                    console.log("user",user)
                 }
             })
         }
 
-      if (!token) {
+        if (!token) {
 
-        setUser({
-            id:0,
-            email:"",
-            nome:"",
-            isAuthenticated: false });
-        goToPage("/login")
-      }
-   
+            setUser({
+                isAuthenticated: false,
+                isEmailVerified: false,
+                nome: "",
+                email: "",
+                id: 0,
+            });
+            goToPage("/login")
+        }
+
     }, []);
-  
+
     return null;
-  }
+}

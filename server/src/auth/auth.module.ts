@@ -6,13 +6,14 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { User } from 'src/user/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { authConstants } from './auth.constants';
-
+import { EmailService } from 'src/email/email.service';
+import { Email } from 'src/email/email.entity';
 
 @Module({
-  providers: [AuthService,UserService],
+  providers: [AuthService,UserService,EmailService],
   controllers: [AuthController],
   imports:[
-    MikroOrmModule.forFeature([User]),
+    MikroOrmModule.forFeature([User,Email]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
