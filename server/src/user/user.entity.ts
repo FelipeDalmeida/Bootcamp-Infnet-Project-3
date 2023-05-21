@@ -15,6 +15,10 @@ export class User{
     @Property()
     email:string;
 
+
+    @Property({nullable:true,columnType:'varchar(5500)'})
+    userPicture?:string
+
     @Property()
     isEmailVerified:boolean = false;
 

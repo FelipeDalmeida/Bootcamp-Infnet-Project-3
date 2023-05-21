@@ -15,6 +15,7 @@ export const useGlobalStore = create<GlobalStore>((set, get) => ({
     nome: "",
     email: "",
     id:0,
+    userPicture:null
   },
   setUser(user) {
     set({ user: { ...get().user, ...user } });

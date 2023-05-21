@@ -7,10 +7,15 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ExamesModule } from './exames/exames.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path'
 
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'public'),
+    }),
     MikroOrmModule.forRoot(),
     ConfigModule.forRoot(),
     PacientesModule,

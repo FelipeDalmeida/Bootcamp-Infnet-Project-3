@@ -27,9 +27,10 @@ export class AuthController {
 
     @UseGuards(AuthGuard)
     @Post('email-verification-code')
-    async reqEmailVerificationCode(@Body() id:number){
-        console.log("userId",id)
-        return await this.authService.reqEmailVerificationCode(id);
+    async reqEmailVerificationCode(@Req() req: Request){
+        const payload = await req['user'];
+        const userId =payload.id;
+        return await this.authService.reqEmailVerificationCode(userId);
 
     }
 

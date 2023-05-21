@@ -41,6 +41,8 @@ const CadastraPaciente = ({ }) => {
 
     const navigate = useNavigate();
     const goToPage = (page: string) => { navigate(`/pacientes/${page}`) }
+    const user = useGlobalStore((state) => state.user);
+
 
     const [errors, setErrors] = useState<any>({
         nome: "",
@@ -59,7 +61,7 @@ const CadastraPaciente = ({ }) => {
         data_nascimento: "",
         cpf: "",
         email: "",
-        celular: ""
+        celular: "",
     })
     const [, cadastroPaciente] = useAxios<Partial<Pacientes>>(
         {
@@ -86,7 +88,8 @@ const CadastraPaciente = ({ }) => {
             data_nascimento: "",
             cpf: "",
             email: "",
-            celular: ""
+            celular: "",
+           
         }
 
         if (!validForm.success) {
@@ -107,7 +110,8 @@ const CadastraPaciente = ({ }) => {
                 data_nascimento: data_nascimento,
                 cpf: cpf,
                 email: email,
-                celular: celular
+                celular: celular,
+                user_id:user.id,
             }
         })
         setErrors(erros)

@@ -5,10 +5,9 @@ type RequestEmailVerificationCodeOutput = {
   success: boolean;
 };
 
-export async function requestEmailVerificationCode(id:any): Promise<RequestEmailVerificationCodeOutput> {
+export async function requestEmailVerificationCode(): Promise<RequestEmailVerificationCodeOutput> {
   const response = await api.post<RequestEmailVerificationCodeOutput>(
     "/auth/email-verification-code",
-    {id}
   );
 
   if(response){

@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { EntityRepository } from '@mikro-orm/mysql';
 import { CreateUserDto } from './dto/create-user.dto';
+import { promises as fs } from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class UserService {
@@ -31,4 +33,27 @@ export class UserService {
         await this.userRepository.flush()
    }
 
+   async uploadProfileAvatar(userId:number, avatar:Buffer){
+    const avatarPath=path.join('public','avatars',`${userId}.jpeg`);
+
+    try{
+        await fs.writeFile(avatarPath,avatar);
+    } catch (error){
+        console.log(error)
+        return{
+            success:false,
+            pictureUrl:null 
+        }
+    }
+  
+    const user = await this.findById(userId);
+    user.userPicture=`/avatars/${userId}.jpeg`
+    this.userRepository.flush()
+
+    return{
+        success:true,
+        pictureUrl:`/avatars/${userId}.jpeg` 
+    }
+
+   }
 }

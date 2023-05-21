@@ -40,7 +40,9 @@ export type Antropometrica = {
 }
 
 export type User = {
-    id?:number;
+    id:number;
     nome: string;
     email: string;
+    userPicture: string | null;
   };
+

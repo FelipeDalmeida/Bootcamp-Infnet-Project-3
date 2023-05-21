@@ -15,8 +15,10 @@ export class PacientesController {
 
 
   @Post()
-  create(@Body() createPacienteDto: CreatePacienteDto) {
-    return this.pacientesService.create(createPacienteDto);
+  async create(@Body() createPacienteDto: CreatePacienteDto) {
+    const response = await this.pacientesService.create(createPacienteDto);
+    console.log(response)
+    return response
   }
 
   

@@ -55,7 +55,7 @@ export function EmailVerificationModal() {
 
 
     async function onRequestEmailVerificationCode() {
-        const { success } = await requestEmailVerificationCode(user.id);
+        const { success } = await requestEmailVerificationCode();
         if (success) {
             alert(text.resendEmailSuccess)
         } else {

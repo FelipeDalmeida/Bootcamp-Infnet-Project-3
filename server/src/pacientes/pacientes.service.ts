@@ -11,6 +11,7 @@ import { UpdateCompcorpDto } from '../exames/compcorp/dto/update-compcorp.dto';
 import { ListPacientesDto } from './dto/list-pacientes.dto';
 import { CreateAvantropometricaDto } from 'src/exames/avantropometrica/dto/create-avantropometrica.dto';
 import { Avantropometrica } from 'src/exames/avantropometrica/avantropometrica.entity';
+import { User } from 'src/user/user.entity';
 
 
 @Injectable()
@@ -23,12 +24,36 @@ export class PacientesService {
     private readonly compcorpRepository: EntityRepository<Compcorp>,
     @InjectRepository(Avantropometrica)
     private readonly avantropometricaRepository: EntityRepository<Avantropometrica>,
+    @InjectRepository(Paciente)
+    private readonly userRepository: EntityRepository<User>,
   ) { }
 
   async create(createPacienteDto: CreatePacienteDto) {
-    const paciente = this.pacienteRepository.create(createPacienteDto);
-    await this.pacienteRepository.flush();
+    // console.log("entrou")
+    // const user =await this.userRepository.findOne(createPacienteDto.userId)
+    // await user.paciente.init()
+    // const paciente = new Paciente()
+    // paciente.user = user;
+    // wrap(paciente).assign(createPacienteDto)
+    // await this.pacienteRepository.persistAndFlush(paciente)
+
+    // return paciente
+
+    const user = await this.userRepository.findOneOrFail(65);
+    await user.paciente.init()
+    const paciente = new Paciente()
+    paciente.user = user;
+    wrap(paciente).assign(createPacienteDto)
+    await this.pacienteRepository.persistAndFlush(paciente)
+
     return paciente
+
+
+    // const paciente = this.pacienteRepository.create(createPacienteDto);
+    // const user =await this.userRepository.findOne(createPacienteDto.user_id)
+    // paciente.user=user
+    // await this.pacienteRepository.flush();
+    // return paciente
   }
 
   async findAll({

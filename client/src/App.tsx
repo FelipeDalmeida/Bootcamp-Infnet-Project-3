@@ -27,7 +27,7 @@ function App() {
   const Login = lazy(() => import('./pages/auth/login'))
   const Register = lazy(() => import('./pages/auth/registro'))
   const Laudo = lazy(() => import('./pages/Laudo'))
-  const Usuario = lazy(() => import('./pages/auth/usuario'))
+  const Usuario = lazy(() => import('./pages/usuario'))
 
 
   if (!user.isAuthenticated) {

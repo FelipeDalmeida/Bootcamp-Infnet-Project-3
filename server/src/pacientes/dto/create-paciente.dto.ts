@@ -53,4 +53,6 @@ export class CreatePacienteDto {
     @Length(11)
     cpf:string;
 
+    @IsNumber()
+    user_id:number;
 }

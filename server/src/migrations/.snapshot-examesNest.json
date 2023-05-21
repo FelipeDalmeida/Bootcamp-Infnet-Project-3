@@ -21,6 +21,15 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "user_picture": {
+          "name": "user_picture",
+          "type": "varchar(5500)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
         "is_email_verified": {
           "name": "is_email_verified",
           "type": "tinyint(1)",
