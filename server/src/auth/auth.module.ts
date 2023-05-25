@@ -12,18 +12,23 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 
 @Module({
-  providers: [AuthService,UserService,EmailService, {
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-  },],
+  providers: [
+    AuthService,
+    UserService,
+    EmailService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
   controllers: [AuthController],
-  imports:[
-    MikroOrmModule.forFeature([User,Email]),
+  imports: [
+    MikroOrmModule.forFeature([User, Email]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1y' },
+      signOptions: { expiresIn: '5s' },
     }),],
-    exports:[AuthService],
+  exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }

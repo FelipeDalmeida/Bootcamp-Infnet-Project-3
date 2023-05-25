@@ -5,7 +5,7 @@ import Text from "../components/Text"
 import CriaForm from "../components/Criaform";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
-import { LoadAuthUser } from "../service/isAuth";
+import { LoadAuthUser } from "../service/LoadAythUser";
 
 //Só pode ser usado se o paciente tiver uma composição corporal e uma antropometrica
 const text = {
@@ -118,7 +118,7 @@ const Laudo = () => {
     ]
 
     return <div className={"md:h-auto p-2 grid grid-cols-12 gap-4 "}>
-         <LoadAuthUser/>
+         {/* <LoadAuthUser/> */}
         <div className={"relative my-0 md:my-10 md:pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border col-start-0 col-span-12 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 xxl:col-start-4 xxl:col-span-6"}>
             {form.nome?<>
             <div className={""}>

@@ -11,6 +11,7 @@ import { criaNome } from "../../service/stringManipulation"
 import { AuthToken } from "../../service/authToken"
 import { useGlobalStore } from "../../service/useGlobalStore"
 import { register } from "../../service/api/register"
+import Container from "../../components/Container"
 
 //@TODO: Deletar ou o useAxios ou o API
 
@@ -52,43 +53,43 @@ const Register = () => {
     const registar = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-    //     if (registro.email === registro.confirmEmail) {
-    //         setRegistro({ ...registro, emailError: "" })
-    //         await realizaRegistro().then(response => {
-    //             console.log("response",response)
-    //             if (response) {
-    //                 console.log("response",response)
-    //                 const { accessToken, user } = response.data;
-    //                 AuthToken.set(accessToken);
-    //                 setUser({ ...user, isAuthenticated: true });
-    //                 goToPage("/cadastro")
-    //             }
-    //         }).catch((error) => {
-    //             console.log(error, error)
-    //             if (error) {
-    //                 setRegistro({ ...registro, error: "Erro no registro" })
-    //             }
-    //         })
-    //     } else {
-    //         setRegistro({ ...registro, emailError: "E-mail diferente!" })
-    //     }
+        //     if (registro.email === registro.confirmEmail) {
+        //         setRegistro({ ...registro, emailError: "" })
+        //         await realizaRegistro().then(response => {
+        //             console.log("response",response)
+        //             if (response) {
+        //                 console.log("response",response)
+        //                 const { accessToken, user } = response.data;
+        //                 AuthToken.set(accessToken);
+        //                 setUser({ ...user, isAuthenticated: true });
+        //                 goToPage("/cadastro")
+        //             }
+        //         }).catch((error) => {
+        //             console.log(error, error)
+        //             if (error) {
+        //                 setRegistro({ ...registro, error: "Erro no registro" })
+        //             }
+        //         })
+        //     } else {
+        //         setRegistro({ ...registro, emailError: "E-mail diferente!" })
+        //     }
 
-        if(registro.email===registro.confirmEmail){
-            
+        if (registro.email === registro.confirmEmail) {
+
             setRegistro({ ...registro, emailError: "" })
 
             const response = await register({
-                nome:registro.nome,
-                email:registro.email,
-                password:registro.password
+                nome: registro.nome,
+                email: registro.email,
+                password: registro.password
             })
-            console.log("response",response)
+            console.log("response", response)
 
-            if(response.success && response.accessToken){
+            if (response.success && response.accessToken) {
                 const { accessToken, user } = response;
                 AuthToken.set(accessToken)
                 setUser({ ...user, isAuthenticated: true });
-                goToPage("/cadastro") 
+                goToPage("/cadastro")
 
             } else {
                 setRegistro({ ...registro, error: "Erro no registro" })
@@ -110,9 +111,8 @@ const Register = () => {
 
     ]
 
-    return <div className={"h-auto p-2 grid grid-cols-12 gap-4 "}>
-
-        <div className={"sm:relative my-10 pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border  col-start-0 col-span-12 md:col-start-4 md:col-span-6 lg:col-start-5 lg:col-span-4"}>
+    return (
+        <Container content={<>
             <div className={"h-40 flex justify-center"}><Img img={Logo} /></div>
             <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={text.labelTitle} />
             <CriaForm inputs={inputs} className={"my-2 grid-cols-1"} />
@@ -121,8 +121,10 @@ const Register = () => {
                 <Button type={"submit"} title={text.labelButton} className={"m-0 my-3 p-2 w-full "} onClick={registar} />
                 <Button type={"button"} title={text.labelButtonLogin} className={"m-0 my-3 p-2 w-full "} onClick={() => { goToPage('/') }} />
             </div>
-        </div>
-    </div>
+        </>
+        }
+        />
+    )
 }
 
 export default Register

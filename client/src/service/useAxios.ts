@@ -2,6 +2,7 @@ import Axios from 'axios'
 import { configure } from 'axios-hooks'
 import { AuthToken } from './authToken'
 import { browserHistory } from './browserHistory'
+import { useGlobalStore } from './useGlobalStore'
 export { default as useAxios } from 'axios-hooks'
 
 

@@ -31,7 +31,7 @@ const text = {
 export function EmailVerificationModal() {
     const user = useGlobalStore((state) => state.user);
     const setUser = useGlobalStore((state) => state.setUser);
-    const [open, setOpen] = useState(!user.isEmailVerified);
+    const [open, setOpen] = useState(!user.isEmailVerified && user.isAuthenticated);
     const [code,setCode] = useState("")
     const [error,setErro]=useState("")
 
