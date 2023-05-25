@@ -8,9 +8,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { authConstants } from './auth.constants';
 import { EmailService } from 'src/email/email.service';
 import { Email } from 'src/email/email.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth.guard';
 
 @Module({
-  providers: [AuthService,UserService,EmailService],
+  providers: [AuthService,UserService,EmailService, {
+    provide: APP_GUARD,
+    useClass: AuthGuard,
+  },],
   controllers: [AuthController],
   imports:[
     MikroOrmModule.forFeature([User,Email]),

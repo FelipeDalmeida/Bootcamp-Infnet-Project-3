@@ -1,8 +1,6 @@
-import { Controller, Get, Req, UseGuards, Post, UseInterceptors, UploadedFile, Body } from '@nestjs/common';
+import { Controller, Get, Req, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from 'src/user/user.service';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { UploadAvatarDto } from './dto/upload-avatar.dto';
 
 @Controller('users')
 export class UserController {
@@ -10,7 +8,6 @@ export class UserController {
         private readonly userService: UserService,
     ) { }
 
-    @UseGuards(AuthGuard)
     @Get('myself')
     async user(@Req() request: Request) {
         const payload = await request['user'];
@@ -23,7 +20,6 @@ export class UserController {
         };
     }
 
-    @UseGuards(AuthGuard)
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(@UploadedFile() avatar: Express.Multer.File, @Req() req: Request,) {

@@ -1,10 +1,8 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Get, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, Req } from '@nestjs/common';
 import { loginCredentialsDto } from './dto/login-credentials.dto';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { AuthGuard } from './auth.guard';
-import { verify } from 'crypto';
-import { VerifyEmailDto } from './dto/verify-email.dto';
+import { Public } from './decorator/public-endpoints';
 
 
 @Controller('auth')
@@ -14,18 +12,20 @@ export class AuthController {
         private readonly authService: AuthService,
     ) { }
 
+    @Public()
     @HttpCode(HttpStatus.OK)
     @Post('login')
     login(@Body() loginCredentialsDto: loginCredentialsDto) {
         return this.authService.login(loginCredentialsDto);
     }
 
+    @Public()
     @Post('register')
     createAccount(@Body() createUserDto:CreateUserDto){
         return this.authService.createAcount(createUserDto)
     }
 
-    @UseGuards(AuthGuard)
+
     @Post('email-verification-code')
     async reqEmailVerificationCode(@Req() req: Request){
         const payload = await req['user'];
@@ -34,7 +34,7 @@ export class AuthController {
 
     }
 
-    @UseGuards(AuthGuard)
+
     @Post('verify-email')
     verifyEmail(@Body() VerifyEmailDto){
         return this.authService.verifyEmail(VerifyEmailDto);
