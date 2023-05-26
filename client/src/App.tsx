@@ -40,7 +40,7 @@ function App() {
             <EmailVerificationModal/>
             
             <Routes>
-              <Route path="*" element={<CadastraPaciente />} />
+              <Route path="*" element={<ListaPacientes />} />
               <Route path="/login" element={<Login />} />
               <Route path="/registro" element={<Register />} />
               <Route path="/" element={<Login />} />

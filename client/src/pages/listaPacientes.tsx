@@ -4,7 +4,7 @@ import { Pacientes } from '../types/types';
 import Text from '../components/Text';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaTools } from 'react-icons/fa';
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaPlusCircle, FaTools } from 'react-icons/fa';
 import Input from '../components/Input';
 import Search from '../components/Search';
 import Tools from '../components/Tools';
@@ -206,7 +206,9 @@ const ListaPacientes = ({ }) => {
                     : ""}
             </div>
 
-            <>{listaPacientes ? (listaPacientes?.length > 0) ? listaPacientes.map(({ id, nome, idade, sexo, data_cadastro }: Pacientes) => {
+            <>
+            <button title='Adicionar Avaliação' className={`absolute top-3 right-6`}>{<FaPlusCircle className={"text-3xl text-blue-500 hover:text-blue-800 h-10 w-10"} onClick={() => goToPage(`/cadastro`)} />}</button>
+            {listaPacientes ? (listaPacientes?.length > 0) ? listaPacientes.map(({ id, nome, idade, sexo, data_cadastro }: Pacientes) => {
 
                 return <div className={" border-b  border-b-blue-400  px-10 grid grid-cols-2 sm:grid-cols-5  gap-0 "} key={id}>
                     <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Nome}:`} /><Text text={`${nome}`} /></div>
