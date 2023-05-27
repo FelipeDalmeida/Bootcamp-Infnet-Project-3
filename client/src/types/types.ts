@@ -8,6 +8,7 @@ export type Pacientes = {
     celular:string;
     data_nascimento:string;
     data_cadastro?:string;
+    user:number;
 }
 
 export type CompCorp = {
@@ -21,6 +22,7 @@ export type CompCorp = {
     musculos_esqueleticos: number|string;
     idade_corporal: number|string;
     data_avaliacao?:string;
+    user:number;
 
 }
 
@@ -37,6 +39,7 @@ export type Antropometrica = {
     altura_joelho?: number|string;
     altura_tornozelo?: number|string;
     data_avaliacao?:string;
+    user:number;
 }
 
 export type User = {

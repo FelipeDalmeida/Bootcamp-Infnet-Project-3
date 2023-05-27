@@ -47,7 +47,8 @@ const PacientePage = ({ }) => {
         data_cadastro: "",
         email: "",
         cpf: "",
-        celular: ""
+        celular: "",
+        user:0,
     }
 
     const [form, setForm] = useState(forminicial);

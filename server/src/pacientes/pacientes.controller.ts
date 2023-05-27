@@ -1,9 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ValidationPipe, Request, Req } from '@nestjs/common';
 import { PacientesService } from './pacientes.service';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
 import { UpdatePacienteDto } from './dto/update-paciente.dto';
 import { CreateCompcorpDto } from '../exames/compcorp/dto/create-compcorp.dto';
-import { UpdateCompcorpDto } from '../exames/compcorp/dto/update-compcorp.dto';
 import { ListPacientesDto } from './dto/list-pacientes.dto';
 import { CreateAvantropometricaDto } from 'src/exames/avantropometrica/dto/create-avantropometrica.dto';
 
@@ -13,7 +12,10 @@ export class PacientesController {
 
 
   @Post()
-  async create(@Body() createPacienteDto: CreatePacienteDto) {
+  async create(@Body() createPacienteDto: CreatePacienteDto, @Request() req:Request ) {
+    const payload = await req['user'];
+    const userId =payload.id;
+    createPacienteDto.user=userId
     const response = await this.pacientesService.create(createPacienteDto);
     console.log(response)
     return response
@@ -56,13 +58,17 @@ export class PacientesController {
 
   //Exames
   @Post(':id_paciente/compcorp')
-  createCompcorp(@Param('id_paciente') id: string,@Param('exam') exam: string,@Body() data: CreateCompcorpDto) {
-    return this.pacientesService.createCompcorp(+id,data);
+  async createCompcorp(@Param('id_paciente') id: string,@Param('exam') exam: string,@Body() data: CreateCompcorpDto, @Request() req:Request) {
+    const payload = await req['user'];
+    const userId =payload.id;
+    return await this.pacientesService.createCompcorp(+id,data,userId);
   }
 
   @Post(':id_paciente/avantropometrica')
-  createAvantropometrica(@Param('id_paciente') id: string,@Param('exam') exam: string,@Body() data: CreateAvantropometricaDto) {
-    return this.pacientesService.createAvantropometrica(+id,data);
+  async createAvantropometrica(@Param('id_paciente') id: string,@Param('exam') exam: string,@Body() data: CreateAvantropometricaDto, @Request() req:Request) {
+    const payload = await req['user'];
+    const userId =payload.id;
+    return await this.pacientesService.createAvantropometrica(+id,data,userId);
   }
   
 }

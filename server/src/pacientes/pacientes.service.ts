@@ -3,7 +3,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
 import { UpdatePacienteDto } from './dto/update-paciente.dto';
 import { Paciente } from './paciente.entity';
-import { EntityRepository } from '@mikro-orm/mysql';
+import { EntityRepository, MikroORM } from '@mikro-orm/mysql';
 import { Reference, wrap } from '@mikro-orm/core';
 import { Compcorp } from '../exames/compcorp/compcorp.entity';
 import { CreateCompcorpDto } from '../exames/compcorp/dto/create-compcorp.dto';
@@ -24,36 +24,14 @@ export class PacientesService {
     private readonly compcorpRepository: EntityRepository<Compcorp>,
     @InjectRepository(Avantropometrica)
     private readonly avantropometricaRepository: EntityRepository<Avantropometrica>,
-    @InjectRepository(Paciente)
-    private readonly userRepository: EntityRepository<User>,
+    @InjectRepository(User)
+    private readonly userRepository:EntityRepository<User>
   ) { }
 
   async create(createPacienteDto: CreatePacienteDto) {
-    // console.log("entrou")
-    // const user =await this.userRepository.findOne(createPacienteDto.userId)
-    // await user.paciente.init()
-    // const paciente = new Paciente()
-    // paciente.user = user;
-    // wrap(paciente).assign(createPacienteDto)
-    // await this.pacienteRepository.persistAndFlush(paciente)
-
-    // return paciente
-
-    const user = await this.userRepository.findOneOrFail(65);
-    await user.paciente.init()
-    const paciente = new Paciente()
-    paciente.user = user;
-    wrap(paciente).assign(createPacienteDto)
-    await this.pacienteRepository.persistAndFlush(paciente)
-
-    return paciente
-
-
-    // const paciente = this.pacienteRepository.create(createPacienteDto);
-    // const user =await this.userRepository.findOne(createPacienteDto.user_id)
-    // paciente.user=user
-    // await this.pacienteRepository.flush();
-    // return paciente
+    const paciente = this.pacienteRepository.create(createPacienteDto);
+    await this.pacienteRepository.flush();
+    return paciente;
   }
 
   async findAll({
@@ -131,24 +109,28 @@ export class PacientesService {
 
 
 
-  async createCompcorp(id_paciente: number, data: CreateCompcorpDto) {
+  async createCompcorp(id_paciente: number, data: CreateCompcorpDto,userId:number) {
 
     const paciente = await this.pacienteRepository.findOneOrFail(id_paciente);
+    const user = await this.userRepository.findOneOrFail(userId)
     await paciente.compcorp.init()
     const exame = new Compcorp()
     exame.paciente = paciente;
+    exame.user=user
     wrap(exame).assign(data)
     await this.compcorpRepository.persistAndFlush(exame)
 
     return exame
   }
 
-  async createAvantropometrica(id_paciente: number, data: CreateAvantropometricaDto) {
+  async createAvantropometrica(id_paciente: number, data: CreateAvantropometricaDto,userId:number) {
 
     const paciente = await this.pacienteRepository.findOneOrFail(id_paciente);
+    const user = await this.userRepository.findOneOrFail(userId)
     await paciente.avantropometrica.init()
     const exame = new Avantropometrica()
     exame.paciente = paciente;
+    exame.user=user
     wrap(exame).assign(data)
     await this.avantropometricaRepository.persistAndFlush(exame)
 

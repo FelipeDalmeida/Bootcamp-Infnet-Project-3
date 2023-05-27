@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Compcorp } from './compcorp/compcorp.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository, wrap } from '@mikro-orm/core';
@@ -94,16 +94,30 @@ export class ExamesService {
   }
 
 
-  async deleteExam(id_exam: number, exam: string) {
+  async deleteExam(id_exam: number, exam: string,userId:number) {
     if (exam === "compcorp") {
-      const exam = await this.compcorpRepository.findOneOrFail(id_exam)
+      const exam = await this.compcorpRepository.findOneOrFail(id_exam, {
+        populate:['user']
+      })
+
+      if(exam.user.id!==userId){
+        throw new ForbiddenException();
+      }
+
       this.compcorpRepository.remove(exam)
       await this.compcorpRepository.flush()
       return exam
     }
 
     else if (exam === "avantropometrica") {
-      const exam = await this.avantropometricaRepository.findOneOrFail(id_exam)
+      const exam = await this.avantropometricaRepository.findOneOrFail(id_exam,{
+        populate:['user']
+      })
+
+      if(exam.user.id!==userId){
+        throw new ForbiddenException();
+      }
+
       this.avantropometricaRepository.remove(exam)
       await this.avantropometricaRepository.flush()
       return exam
@@ -112,18 +126,32 @@ export class ExamesService {
     return null 
   }
 
-  async updateCompcorp(id_exam: number, data: UpdateCompcorpDto) {
+  async updateCompcorp(id_exam: number, data: UpdateCompcorpDto,userId:number) {
 
-      const exam = await this.compcorpRepository.findOneOrFail(id_exam)
+      const exam = await this.compcorpRepository.findOneOrFail(id_exam,{
+        populate:['user']
+      })
+
+      if(exam.user.id!==userId){
+        throw new ForbiddenException();
+      }
+
       wrap(exam).assign(data);
       await this.compcorpRepository.flush()
       return exam
 
   }
 
-  async updateAvantropometrica(id_exam: number, data: UpdateAvantropometrica) {
+  async updateAvantropometrica(id_exam: number, data: UpdateAvantropometrica,userId:number) {
 
-    const exam = await this.avantropometricaRepository.findOneOrFail(id_exam)
+    const exam = await this.avantropometricaRepository.findOneOrFail(id_exam,{
+      populate:['user']
+    })
+
+    if(exam.user.id!==userId){
+      throw new ForbiddenException();
+    }
+    
     wrap(exam).assign(data);
     await this.avantropometricaRepository.flush()
     return exam

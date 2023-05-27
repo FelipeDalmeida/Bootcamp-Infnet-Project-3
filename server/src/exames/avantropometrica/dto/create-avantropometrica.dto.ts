@@ -93,5 +93,5 @@ export class CreateAvantropometricaDto {
     @IsString()
     data_avaliacao:string;
 
-
+    // user:number;
 }

@@ -31,17 +31,13 @@ const text = {
 
 const CadastraPaciente = ({ }) => {
 
-    // const user = useGlobalStore((state) => state.user);
-    //  useEffect(()=>{
-    //     console.log(user)
-    //  })
 
 
 
 
     const navigate = useNavigate();
     const goToPage = (page: string) => { navigate(`/pacientes/${page}`) }
-    const user = useGlobalStore((state) => state.user);
+
 
 
     const [errors, setErrors] = useState<any>({
@@ -67,7 +63,6 @@ const CadastraPaciente = ({ }) => {
         {
             url: '/pacientes',
             method: 'post',
-
         },
 
         {
@@ -111,13 +106,12 @@ const CadastraPaciente = ({ }) => {
                 cpf: cpf,
                 email: email,
                 celular: celular,
-                user_id:user.id,
             }
         })
         setErrors(erros)
         console.log("Cadastrado")
         await delay(0.5)
-        goToPage("")
+        goToPage("/")
 
     }
 

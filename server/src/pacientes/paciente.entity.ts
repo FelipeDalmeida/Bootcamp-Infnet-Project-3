@@ -39,5 +39,5 @@ export class Paciente {
     avantropometrica=new Collection<Avantropometrica>(this)
 
     @ManyToOne(()=>User)
-    user:User
+    user:User;
 }

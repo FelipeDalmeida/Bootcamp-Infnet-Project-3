@@ -83,7 +83,7 @@ const Usuario = () => {
         <Input label={text.labelEmail} type={"email"} value={usuario.email} disabled={true} />,
     ]
 
-    return <div className={"h-auto p-2 grid grid-cols-12 gap-4 "}>
+    return (<div className={"h-auto p-2 grid grid-cols-12 gap-4 "}>
 
         <div className={"sm:relative my-10 pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border  col-start-0 col-span-12 md:col-start-4 md:col-span-6 lg:col-start-5 lg:col-span-4"}>
             <div className={"h-40 flex justify-center items-center"}>
@@ -107,7 +107,7 @@ const Usuario = () => {
             </div>
             <CriaForm inputs={inputs} className={"my-2 grid-cols-1"} />
         </div>
-    </div>
+    </div>)
 }
 
 export default Usuario

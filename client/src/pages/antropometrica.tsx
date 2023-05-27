@@ -11,6 +11,7 @@ import Text from "../components/Text";
 import { avAntropometricaSchemaPut } from "../schemas/examsSchema";
 import { setFormErrorsValid } from "../service/formValidation"
 import { LoadAuthUser } from "../service/LoadAythUser";
+import { useGlobalStore } from "../service/useGlobalStore";
 
 const text = {
     labelEstatura: "Estatura",
@@ -33,6 +34,7 @@ const AvAntropometrica = () => {
     const id = params.id;
     const navigate = useNavigate();
     const goToPage = (page: string) => { navigate(page) }
+    const user = useGlobalStore((state) => state.user);
 
     const forminicial: Antropometrica = {
         estatura: "",
@@ -44,7 +46,8 @@ const AvAntropometrica = () => {
         largura_quadril: "",
         altura_joelho: "",
         altura_tornozelo: "",
-        data_avaliacao: ""
+        data_avaliacao: "",
+        user:0,
     }
 
     const [errors, setErrors] = useState<any>({
@@ -160,6 +163,8 @@ const AvAntropometrica = () => {
         if (infoAntropometrica) {
             setForm(infoAntropometrica);
         }
+
+        // console.log(`user.isAuthenticated: ${user.isAuthenticated} user.id:${user.id} infoAntropometrica?.user:${infoAntropometrica?.user}`)
     }, [infoAntropometrica]);
 
 
@@ -190,7 +195,7 @@ const AvAntropometrica = () => {
             </form>
 
             <button className={`absolute  top-2 left-6 ${disabled ? "hidden" : ""}`}>{<FaTrashAlt className={"text-red-700 h-10 w-5"} onClick={deletaForm} />}</button>
-            <button className={`absolute top-3 right-6`}>{<FaPen className={"text-sky-700 h-10 w-5"} onClick={() => { editarForm() }} />}</button>
+            <button className={`absolute top-3 right-6`}>{user.isAuthenticated && user.id === infoAntropometrica?.user  && (<FaPen className={"text-sky-700 h-10 w-5"} onClick={() => { editarForm() }} />)}</button>
             <div className={`mx-10 ${disabled ? "hidden" : ""}`}>
                 <Button title={text.labelButtonAtualizar} className={"m-0 p-2 w-full md:absolute md:right-12 md:bottom-6 md:w-60"} onClick={async(e)=>await atualizaForm(e)} />
             </div>

@@ -8,7 +8,7 @@ export { default as useAxios } from 'axios-hooks'
 
 
 const axios = Axios.create({
-    baseURL: "http://127.0.0.1:8080",
+    baseURL: "http://localhost:8080",
 })
 
 
@@ -28,7 +28,7 @@ axios.interceptors.response.use(
     (error) => {
     
         const status = error.request.status;
-        if (status === 401 || status === 500) {
+        if (status === 401) {
             AuthToken.remove();
             console.log("Token Expirado")
             browserHistory.push("/login")

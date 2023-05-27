@@ -76,5 +76,5 @@ export class CreateCompcorpDto {
     @IsString()
     data_avaliacao:string;
 
-
+    // user:number
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ValidationPipe, Req } from '@nestjs/common';
 import { ExamesService } from './exames.service';
 import { ListExamDto } from 'src/exames/list-exames.dto';
 import { UpdateCompcorpDto } from './compcorp/dto/update-compcorp.dto';
@@ -27,18 +27,24 @@ export class ExamesController {
   }
   
   @Delete(':exam/:id_exam')
-  deleteExam(@Param('exam') exam: string, @Param('id_exam') id_exam:string) {
-    return this.examesService.deleteExam(+id_exam, exam);
+  async deleteExam(@Param('exam') exam: string, @Param('id_exam') id_exam:string, @Req() req:Request) {
+    const payload = await req['user'];
+    const userId =payload.id;
+    return this.examesService.deleteExam(+id_exam, exam,userId);
   }
 
   @Patch('compcorp/:id_exam')
-  updateCompcorp(@Param('id_exam') id_exam:string,@Body() data:UpdateCompcorpDto){
-    return this.examesService.updateCompcorp(+id_exam,data)
+  async updateCompcorp(@Param('id_exam') id_exam:string,@Body() data:UpdateCompcorpDto, @Req() req:Request){
+    const payload = await req['user'];
+    const userId =payload.id;
+    return this.examesService.updateCompcorp(+id_exam,data,userId)
   }
 
   @Patch('avantropometrica/:id_exam')
-  updateupdateAvantropometrica(@Param('id_exam') id_exam:string,@Body() data:UpdateAvantropometrica){
-    return this.examesService.updateAvantropometrica(+id_exam,data)
+  async updateupdateAvantropometrica(@Param('id_exam') id_exam:string,@Body() data:UpdateAvantropometrica, @Req() req:Request){
+    const payload = await req['user'];
+    const userId =payload.id;
+    return this.examesService.updateAvantropometrica(+id_exam,data,userId)
   }
 
   // @Patch('teste/:exam/:id_exam')

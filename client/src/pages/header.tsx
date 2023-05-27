@@ -26,7 +26,7 @@ const Header = () => {
     }
 
 
-    const anchor = [ <Link to='/pacientes'>{"Pacientes"}</Link>,<Link to='/usuario'>{"Usuario"}</Link>,<Link to='/'>{"Chat Médico"}</Link>,]
+    const anchor = [ <Link to='/pacientes'>{"Pacientes"}</Link>,<Link to='/usuario'>{"Usuario"}</Link>,<Link to='/'>{"Chat"}</Link>,]
     const anchor2 = [<Button className={"mt-6 md:mt-1"} title={"Logout"} onClick={() => logOut()} />]
 
     if(user.isAuthenticated && AuthToken.get()){
