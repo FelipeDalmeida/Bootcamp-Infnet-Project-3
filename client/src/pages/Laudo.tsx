@@ -68,7 +68,7 @@ const Laudo = () => {
 
     const [{ data: laudoPaciente }, getLaudo] = useAxios<any>(
         {
-            url: `pacientes/laudo/${id}`,
+            url: `exames/laudo/${id}`,
             method: "get",
         },
         {
@@ -76,11 +76,15 @@ const Laudo = () => {
         }
     );
     useEffect(() => {
-        getLaudo()
+        getLaudo().then(response=>{
+            console.log(response)
+        })
+        console.log(laudoPaciente)
         console.log("Carregado")
     }, [])
     useEffect(() => {
         if (laudoPaciente) {
+            console.log(laudoPaciente.data)
             if(laudoPaciente.success){
                 setForm({...laudoPaciente.data});
             }

@@ -22,10 +22,11 @@ export class ExamesController {
   }
 
   @Get(':exam/:id_exam')
-  findOneExam(@Param('exam') exam: string, @Param('id_exam') id_exam:string) {
-    return this.examesService.findOneExam(+id_exam, exam);
+  async findOneExam(@Param('exam') exam: string, @Param('id_exam') id_exam:string) {
+    return await this.examesService.findOneExam(+id_exam, exam);
   }
   
+
   @Delete(':exam/:id_exam')
   async deleteExam(@Param('exam') exam: string, @Param('id_exam') id_exam:string, @Req() req:Request) {
     const payload = await req['user'];

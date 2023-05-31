@@ -83,11 +83,11 @@ export class ExamesService {
 
   async findOneExam(id_exam: number, exam: string) {
     if (exam === "compcorp") {
-      return this.compcorpRepository.findOneOrFail(id_exam)
+      return await this.compcorpRepository.findOneOrFail(id_exam)
     }
 
     else if (exam === "avantropometrica") {
-      return this.avantropometricaRepository.findOneOrFail(id_exam)
+      return await this.avantropometricaRepository.findOneOrFail(id_exam)
     }
 
     return null 

@@ -53,7 +53,7 @@ function App() {
               <Route path="/compcorp/:id" element={<AvCompCorp />} />
               <Route path="/cadastroantropometrica/:id" element={<CadastraAvAntropometrica />} />
               <Route path="/antropometrica/:id" element={<AvAntropometrica />} />
-              <Route path="/laudo/:id" element={<Laudo />} />
+              {/* <Route path="/laudo/:id" element={<Laudo />} /> */}
               <Route path="/usuario" element={<Usuario />} />
               <Route path="/chat" element={<NotFound />} />
   
@@ -63,51 +63,6 @@ function App() {
   
       );
 
-
-  // if (!user.isAuthenticated) {
-  //   return (
-  //     <Router history={browserHistory}>
-
-  //       <Suspense fallback={<Load />}>
-     
-  //         <Routes>
-
-  //           <Route path="/" element={<Login />} />
-  //           <Route path="/login" element={<Login />} />
-  //           <Route path="*" element={<Login />} />
-  //           <Route path="/registro" element={<Register />} />
-  //         </Routes>
-  //       </Suspense>
-  //     </Router>);
-  // }
-  // else {
-  //   return (
-  //     <Router history={browserHistory}>
-
-  //       <Suspense fallback={<Load />}>
-
-  //         <Header />
-  //         <EmailVerificationModal/>
-  //         <Routes>
-  //           <Route path="*" element={<Usuario />} />
-  //           <Route path="/login" element={<Login />} />
-  //           <Route path="/" element={<CadastraPaciente />} />
-  //           <Route path="/cadastro" element={<CadastraPaciente />} />
-  //           <Route path="/pacientes" element={<ListaPacientes />} />
-  //           <Route path="/pacientes/:id" element={<PacientePage />} />
-  //           <Route path="/cadastrocompcorp/:id" element={<CadastraAvCompCorp />} />
-  //           <Route path="/compcorp/:id" element={<AvCompCorp />} />
-  //           <Route path="/cadastroantropometrica/:id" element={<CadastraAvAntropometrica />} />
-  //           <Route path="/antropometrica/:id" element={<AvAntropometrica />} />
-  //           <Route path="/laudo/:id" element={<Laudo />} />
-  //           <Route path="/usuario" element={<Usuario />} />
-
-  //         </Routes>
-  //       </Suspense>
-  //     </Router>
-
-  //   );
-  // }
 
 }
 
