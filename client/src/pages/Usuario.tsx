@@ -1,9 +1,10 @@
-import useAxios from "axios-hooks";
 import { User } from "../types/types";
 import { useEffect, useState } from "react";
 import Input from "../components/Input";
 import CriaForm from "../components/Criaform";
 import { uploadAvatar } from "../service/api/uploadAvatar";
+import { useGlobalStore } from "../service/useGlobalStore";
+import { getMyself } from "../service/api/getMyself";
 
 
 const text = {
@@ -25,39 +26,17 @@ const usuarioDefault: User = {
 
 const Usuario = () => {
 
-
     const [usuario, setUsuario] = useState<User>(usuarioDefault)
-    const [
-        {
-            data: infoUsuario
-        },
-        getUsuario] = useAxios<User>(
-            {
-                url: `/users/myself`,
-                method: "get",
-            },
-            {
-                manual: true,
-            }
-        );
 
 
-    useEffect(() => {
-        getUsuario().then(response => {
-            console.log(response.data)
-            if (response.data) {
-                console.log(response.data)
-                setUsuario({
-                    id: response.data.id,
-                    nome: response.data.nome,
-                    email: response.data.email,
-                    userPicture: response.data.userPicture
-                })
-            }
+    useEffect(()=>{
+        getMyself().then((user) => {
+            setUsuario(user);
+          });
+    },[])
 
-        })
 
-    }, [])
+
 
     async function onPictureSelect(e: React.ChangeEvent<HTMLInputElement>) {
         const picture = e.target.files?.[0];
@@ -75,7 +54,7 @@ const Usuario = () => {
                 alert(text.uploadFailure);
             }
         }
-        console.log("picture",usuario.userPicture)
+        console.log("picture", usuario.userPicture)
     }
 
     const inputs = [

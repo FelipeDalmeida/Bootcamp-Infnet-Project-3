@@ -10,7 +10,6 @@ import type { CompCorp } from "../types/types";
 import Text from "../components/Text";
 import { compcorpSchemaPut } from "../schemas/examsSchema";
 import { setFormErrorsValid } from "../service/formValidation"
-import { LoadAuthUser } from "../service/LoadAythUser";
 import { useGlobalStore } from "../service/useGlobalStore";
 
 const text = {
@@ -172,7 +171,6 @@ const AvCompCorp = () => {
 
 
     return <div className={" md:h-auto p-2 grid grid-cols-12 gap-4 "}>
-         {/* <LoadAuthUser/> */}
         <div className={"relative md:my-10 md:pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border col-start-0 col-span-12 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 xxl:col-start-4 xxl:col-span-6"}>
             <form className={"   "}>
                 <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={text.labelTitle} />

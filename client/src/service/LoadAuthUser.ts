@@ -4,6 +4,7 @@ import { useGlobalStore } from "./useGlobalStore";
 import { AuthToken } from "./authToken";
 import useAxios from "axios-hooks";
 import { User } from "../types/types";
+import { getMyself } from "./api/getMyself";
 
 //@TODO refatorar o código
 
@@ -28,22 +29,27 @@ export function LoadAuthUser() {  //em cada pagina irá verificar se o token est
 
     useEffect(() => {
         setToken(AuthToken.get());
-
+        console.log(token)
         if (token || user.isAuthenticated) {
-
-            getUsuario().then(usuario => {
-                if (usuario.data.id === user.id) {
-                    setUser({
-                        ...usuario, 
-                        isAuthenticated: true 
-                    });
-                    console.log("user",user)
-                }
-            })
+            // getUsuario().then(usuario => {
+            //     console.log("usuario.data.id", usuario.data.id)
+            //     console.log("user.id", user.id)
+            //     console.log(usuario)
+            //     // if (usuario.data.id === user.id) {
+            //     setUser({
+            //         ...usuario.data,
+            //         isAuthenticated: true
+            //     });
+            //     console.log("user", user)
+            //     // }
+            // })
+            getMyself().then((user) => {
+                setUser({ ...user, isAuthenticated: true });
+              });
         }
 
         if (!token) {
-
+            console.log("Token inválido")
             setUser({
                 isAuthenticated: false,
                 isEmailVerified: false,

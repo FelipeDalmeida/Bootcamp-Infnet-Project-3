@@ -4,13 +4,11 @@ import { Pacientes } from '../types/types';
 import Text from '../components/Text';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaPlusCircle, FaTools } from 'react-icons/fa';
-import Input from '../components/Input';
+import { FaPlusCircle} from 'react-icons/fa';
 import Search from '../components/Search';
 import Tools from '../components/Tools';
 import Select from '../components/Select';
 import ArrowSearch from '../components/ArrowSearch';
-import { LoadAuthUser } from '../service/LoadAythUser';
 
 
 
@@ -134,8 +132,6 @@ const ListaPacientes = ({ }) => {
 
 
     return <div className={"h-full p-2 grid grid-cols-12 gap-4 "}>
-         {/* <LoadAuthUser/> */}
-
         <div className={"relative md:my-10 md:pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border  col-start-0 col-span-12 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 xxl:col-start-4 xxl:col-span-6"}>
             <Text className={"text-center my-10 text-4xl"} type={"h1"} text={text.title} />
             <Tools

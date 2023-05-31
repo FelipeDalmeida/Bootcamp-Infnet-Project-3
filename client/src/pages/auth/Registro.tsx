@@ -32,47 +32,10 @@ const Register = () => {
     const setUser = useGlobalStore((state) => state.setUser);
     const [registro, setRegistro] = useState({ nome: "", email: "", password: "", error: "", confirmEmail: "", emailError: "" })
 
-    // const [, realizaRegistro] = useAxios(
-    //     {
-    //         url: '/auth/register',
-    //         method: 'post',
-    //         data: {
-    //             nome: registro.nome,
-    //             email: registro.email,
-    //             password: registro.password
-    //         },
-
-    //     },
-
-    //     {
-    //         manual: true,
-    //     }
-    // )
 
 
     const registar = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        //     if (registro.email === registro.confirmEmail) {
-        //         setRegistro({ ...registro, emailError: "" })
-        //         await realizaRegistro().then(response => {
-        //             console.log("response",response)
-        //             if (response) {
-        //                 console.log("response",response)
-        //                 const { accessToken, user } = response.data;
-        //                 AuthToken.set(accessToken);
-        //                 setUser({ ...user, isAuthenticated: true });
-        //                 goToPage("/cadastro")
-        //             }
-        //         }).catch((error) => {
-        //             console.log(error, error)
-        //             if (error) {
-        //                 setRegistro({ ...registro, error: "Erro no registro" })
-        //             }
-        //         })
-        //     } else {
-        //         setRegistro({ ...registro, emailError: "E-mail diferente!" })
-        //     }
 
         if (registro.email === registro.confirmEmail) {
 

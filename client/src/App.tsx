@@ -3,10 +3,10 @@ import { unstable_HistoryRouter as Router, Routes, Route } from 'react-router-do
 import { browserHistory } from './service/browserHistory';
 import './App.css';
 import Header from './pages/Header';
-import Load from './components/load/load';
+import Load from './components/load/Load';
 import { useGlobalStore } from './service/useGlobalStore';
 import {EmailVerificationModal} from './service/EmailVerificationModal'
-import { LoadAuthUser } from './service/LoadAythUser';
+import { LoadAuthUser } from './service/LoadAuthUser';
 
 
 
@@ -25,10 +25,12 @@ function App() {
   const AvCompCorp = lazy(() => import('./pages/Compcorp'))
   const CadastraAvAntropometrica = lazy(() => import('./pages/CadastraAntropometrica'))
   const AvAntropometrica = lazy(() => import('./pages/Antropometrica'))
-  const Login = lazy(() => import('./pages/auth/login'))
-  const Register = lazy(() => import('./pages/auth/registro'))
+  const Login = lazy(() => import('./pages/auth/Login'))
+  const Register = lazy(() => import('./pages/auth/Registro'))
   const Laudo = lazy(() => import('./pages/Laudo'))
   const Usuario = lazy(() => import('./pages/Usuario'))
+  const Chat = lazy(() => import('./pages/Chat'))
+  const NotFound = lazy(() => import('./pages/NotFound'))
 
   return (
         <Router history={browserHistory}>
@@ -40,7 +42,7 @@ function App() {
             <EmailVerificationModal/>
             
             <Routes>
-              <Route path="*" element={<ListaPacientes />} />
+              <Route path="*" element={<NotFound />} />
               <Route path="/login" element={<Login />} />
               <Route path="/registro" element={<Register />} />
               <Route path="/" element={<Login />} />
@@ -53,6 +55,7 @@ function App() {
               <Route path="/antropometrica/:id" element={<AvAntropometrica />} />
               <Route path="/laudo/:id" element={<Laudo />} />
               <Route path="/usuario" element={<Usuario />} />
+              <Route path="/chat" element={<NotFound />} />
   
             </Routes>
           </Suspense>

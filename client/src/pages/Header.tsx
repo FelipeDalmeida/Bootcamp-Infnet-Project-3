@@ -12,29 +12,30 @@ const Header = () => {
     const setUser = useGlobalStore((state) => state.setUser);
     const navigate = useNavigate();
     const goToPage = (page: string) => { navigate(page) }
-    const logOut=()=>{
+    const logOut = () => {
 
         AuthToken.remove()
         setUser({
-              isAuthenticated: false,
-              id:0,
-              email:"",
-              nome:"" 
-            });
-        
+            isAuthenticated: false,
+            id: 0,
+            email: "",
+            nome: ""
+        });
+
         goToPage("/login")
     }
 
 
-    const anchor = [ <Link to='/pacientes'>{"Pacientes"}</Link>,<Link to='/usuario'>{"Usuario"}</Link>,<Link to='/'>{"Chat"}</Link>,]
+    const anchor = [<Link to='/pacientes'>{"Pacientes"}</Link>, <Link to='/usuario'>{"Usuario"}</Link>, <Link to='/chat'>{"Chat"}</Link>,]
     const anchor2 = [<Button className={"mt-6 md:mt-1"} title={"Logout"} onClick={() => logOut()} />]
 
-    if(user.isAuthenticated && AuthToken.get()){
-    return ( <>
-   
-    <Nav anchor={anchor} anchor2={anchor2} />
-    
-    </>)
+    if (user.isAuthenticated && AuthToken.get()) {
+  
+        return (<>
+
+            <Nav anchor={anchor} anchor2={anchor2} />
+
+        </>)
     } else {
         return (<></>)
     }

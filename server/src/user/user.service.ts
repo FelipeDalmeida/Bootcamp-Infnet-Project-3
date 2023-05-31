@@ -13,12 +13,12 @@ export class UserService {
         private readonly userRepository:EntityRepository<User>
     ){}
 
-    findById(id:number){
-        return this.userRepository.findOneOrFail(id)
+    async findById(id:number){
+        return await this.userRepository.findOneOrFail(id)
     }
 
-    findByEmail(email:string){
-        return this.userRepository.findOne({email})
+    async findByEmail(email:string){
+        return await this.userRepository.findOne({email})
     }
 
     async create(createUserDto:CreateUserDto){
