@@ -38,6 +38,8 @@ export class Paciente {
     @OneToMany(()=>Avantropometrica,(avantropometrica)=>avantropometrica.paciente)
     avantropometrica=new Collection<Avantropometrica>(this)
 
-    @ManyToOne(()=>User)
+    @ManyToOne(()=>User,{
+        onDelete:"cascade"
+    })
     user:User;
 }

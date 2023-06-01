@@ -220,6 +220,7 @@
             "id"
           ],
           "referencedTableName": "user",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }
@@ -459,6 +460,7 @@
             "id"
           ],
           "referencedTableName": "user",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }
@@ -638,6 +640,7 @@
             "id"
           ],
           "referencedTableName": "user",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }

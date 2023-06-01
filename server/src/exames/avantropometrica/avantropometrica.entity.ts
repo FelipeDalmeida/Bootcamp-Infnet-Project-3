@@ -42,7 +42,9 @@ export class Avantropometrica {
     })
     paciente:Paciente
 
-    @ManyToOne(()=>User)
+    @ManyToOne(()=>User,{
+        onDelete:"cascade"
+    })
     user:User
 
 

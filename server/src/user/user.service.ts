@@ -5,6 +5,10 @@ import { EntityRepository } from '@mikro-orm/mysql';
 import { CreateUserDto } from './dto/create-user.dto';
 import { promises as fs } from 'fs';
 import * as path from 'path';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { wrap } from '@mikro-orm/core';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
+import * as bcrypt from 'bcrypt'; 
 
 @Injectable()
 export class UserService {
@@ -56,4 +60,27 @@ export class UserService {
     }
 
    }
+
+   async update(id: number, upadateUserDto:UpdateUserDto) {
+    console.log(upadateUserDto)
+    const user = await this.userRepository.findOneOrFail(id);
+    wrap(user).assign(upadateUserDto);
+    this.userRepository.flush();
+    return {...user,...upadateUserDto};
+  }
+
+//   async updatePassword(id: number, updateUserPasswordDto:UpdateUserPasswordDto) {
+//     const user = await this.userRepository.findOneOrFail(id);
+//     if (await user?.comparePassword(updateUserPasswordDto.oldPassword)) {
+//         const data={
+//             password:updateUserPasswordDto.password
+//         }
+//         data.password==await bcrypt.hash(updateUserPasswordDto.password,10)
+//         wrap(user).assign(data);
+//         this.userRepository.flush();
+//         return {success:true};
+//         }
+
+//     return {success:false};
+//   }
 }

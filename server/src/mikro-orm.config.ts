@@ -1,8 +1,10 @@
+import * as dotenv from 'dotenv';
 import { Avantropometrica } from './exames/avantropometrica/avantropometrica.entity';
 import { Compcorp } from './exames/compcorp/compcorp.entity';
 import { Paciente } from './pacientes/paciente.entity';
 import { User } from './user/user.entity';
 import { Email } from './email/email.entity';
+dotenv.config();
 
 export default {
     entities:[Paciente,User,Avantropometrica,Compcorp,Email],

@@ -1,6 +1,8 @@
-import { Controller, Get, Req, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Req, Post, UseInterceptors, UploadedFile, Patch, Body } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from 'src/user/user.service';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 
 @Controller('users')
 export class UserController {
@@ -16,7 +18,8 @@ export class UserController {
             id: user.id,
             nome: user.nome,
             email: user.email,
-            userPicture:user.userPicture
+            userPicture:user.userPicture,
+            isEmailVerified:user.isEmailVerified
         };
     }
 
@@ -27,4 +30,18 @@ export class UserController {
         const userId =payload.id;
         return this.userService.uploadProfileAvatar(userId,avatar.buffer)
     }
+
+    @Patch()
+    async updateUser(@Body() upadateUserDto:UpdateUserDto, @Req() req:Request){
+      const payload = await req['user'];
+      const userId =payload.id;
+      return this.userService.update(userId,upadateUserDto)
+    }
+
+    // @Patch('password')
+    // async updatePassword(@Body() updateUserPasswordDto:UpdateUserPasswordDto, @Req() req:Request){
+    //   const payload = await req['user'];
+    //   const userId =payload.id;
+    //   return this.userService.updatePassword(userId,updateUserPasswordDto)
+    // }
 }

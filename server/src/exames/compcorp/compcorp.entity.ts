@@ -36,6 +36,8 @@ export class Compcorp {
     })
     paciente:Paciente
 
-    @ManyToOne(()=>User)
+    @ManyToOne(()=>User,{
+        onDelete:"cascade"
+    })
     user:User
 }
