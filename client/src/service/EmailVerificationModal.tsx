@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Modal from "../components/Modal"
 import Input from "../components/Input"
 import Button from "../components/Button"
@@ -31,10 +31,14 @@ const text = {
 export function EmailVerificationModal() {
     const user = useGlobalStore((state) => state.user);
     const setUser = useGlobalStore((state) => state.setUser);
+    // const [open, setOpen] = useState(!user.isEmailVerified && user.isAuthenticated);
     const [open, setOpen] = useState(!user.isEmailVerified && user.isAuthenticated);
     const [code,setCode] = useState("")
     const [error,setErro]=useState("")
 
+    useEffect(()=>{
+        setOpen(!user.isEmailVerified && user.isAuthenticated)
+    })
 
     const contentModal = <div className={"text-start md:text-justify"}>
         {text.content(user.email)}
@@ -75,6 +79,10 @@ export function EmailVerificationModal() {
         }
     }
 
+    useEffect(()=>{
+        console.log(user)
+        // setOpen(!user.isEmailVerified && user.isAuthenticated)
+    },[user])
 
     return <Modal
         open={open}

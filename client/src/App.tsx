@@ -27,10 +27,11 @@ function App() {
   const AvAntropometrica = lazy(() => import('./pages/Antropometrica'))
   const Login = lazy(() => import('./pages/auth/Login'))
   const Register = lazy(() => import('./pages/auth/Registro'))
-  const Laudo = lazy(() => import('./pages/Laudo'))
+  // const Laudo = lazy(() => import('./pages/Laudo'))
   const Usuario = lazy(() => import('./pages/Usuario'))
   const Chat = lazy(() => import('./pages/Chat'))
   const NotFound = lazy(() => import('./pages/NotFound'))
+  // const PasswordChange = lazy(()=>import('./pages/PasswordChange'))
 
   return (
         <Router history={browserHistory}>
@@ -55,7 +56,8 @@ function App() {
               <Route path="/antropometrica/:id" element={<AvAntropometrica />} />
               {/* <Route path="/laudo/:id" element={<Laudo />} /> */}
               <Route path="/usuario" element={<Usuario />} />
-              <Route path="/chat" element={<NotFound />} />
+              <Route path="/chat" element={<Chat />} />
+              {/* <Route path="/password-change" element={<PasswordChange />} />          */}
   
             </Routes>
           </Suspense>

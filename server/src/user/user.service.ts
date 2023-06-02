@@ -61,8 +61,14 @@ export class UserService {
 
    }
 
+   async findAll() {
+    const users = await this.userRepository.findAll({
+      fields: ['id', 'email', 'nome', 'userPicture'],
+    });
+    return users;
+  }
+
    async update(id: number, upadateUserDto:UpdateUserDto) {
-    console.log(upadateUserDto)
     const user = await this.userRepository.findOneOrFail(id);
     wrap(user).assign(upadateUserDto);
     this.userRepository.flush();

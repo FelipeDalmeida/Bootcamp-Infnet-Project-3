@@ -31,20 +31,9 @@ export function LoadAuthUser() {  //em cada pagina irá verificar se o token est
         setToken(AuthToken.get());
         console.log(token)
         if (token || user.isAuthenticated) {
-            // getUsuario().then(usuario => {
-            //     console.log("usuario.data.id", usuario.data.id)
-            //     console.log("user.id", user.id)
-            //     console.log(usuario)
-            //     // if (usuario.data.id === user.id) {
-            //     setUser({
-            //         ...usuario.data,
-            //         isAuthenticated: true
-            //     });
-            //     console.log("user", user)
-            //     // }
-            // })
             getMyself().then((user) => {
                 setUser({ ...user, isAuthenticated: true });
+                console.log(user)
               });
         }
 

@@ -59,7 +59,9 @@ const Login = () => {
 
 
     return(
-        <Container content={<>
+        <Container 
+        type={"auth"}
+        content={<>
             <div className={"h-40 flex justify-center"}><Img img={Logo} /></div>
                 <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={text.labelTitle} />
                 <CriaForm inputs={inputs} className={"my-2 grid-cols-1"} />

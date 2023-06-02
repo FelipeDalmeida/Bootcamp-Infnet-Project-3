@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom"
 import { compcorpSchema } from "../schemas/examsSchema"
 import { setFormErrorsValid } from "../service/formValidation"
-
+import Container from "../components/Container"
 
 const text = {
     labelMassa: "Massa [kg]",
@@ -39,7 +39,7 @@ const CadastraAvCompCorp = ({ }) => {
         metabolismo_basal: "",
         musculos_esqueleticos: "",
         idade_corporal: "",
-        data_avaliacao:""
+        data_avaliacao: ""
     })
 
     const [errors, setErrors] = useState<any>({
@@ -88,7 +88,7 @@ const CadastraAvCompCorp = ({ }) => {
             return false
         }
 
-        const { massa, imc, gordura_corporal, gordura_visceral, metabolismo_basal, musculos_esqueleticos, idade_corporal,data_avaliacao } = validForm.data
+        const { massa, imc, gordura_corporal, gordura_visceral, metabolismo_basal, musculos_esqueleticos, idade_corporal, data_avaliacao } = validForm.data
         await cadastroComcorp({
             data: {
                 massa: massa,
@@ -98,7 +98,7 @@ const CadastraAvCompCorp = ({ }) => {
                 metabolismo_basal: metabolismo_basal,
                 musculos_esqueleticos: musculos_esqueleticos,
                 idade_corporal: idade_corporal,
-                data_avaliacao:data_avaliacao
+                data_avaliacao: data_avaliacao
             }
         })
         setErrors(erros)
@@ -111,25 +111,25 @@ const CadastraAvCompCorp = ({ }) => {
 
 
     const inputs = [
-        <Input label={text.labelMassa} onChange={(e: any) => setForm({ ...form, massa: e.target.value })} value={form.massa} error={errors.massa}/>,
-        <Input label={text.labelIMC} onChange={(e: any) => setForm({ ...form, imc: e.target.value })} value={form.imc} error={errors.imc}/>,
-        <Input label={text.labelGordura_Corporal} onChange={(e: any) => setForm({ ...form, gordura_corporal: e.target.value })} value={form.gordura_corporal} error={errors.gordura_corporal}/>,
-        <Input label={text.labelGordura_Visceral} onChange={(e: any) => setForm({ ...form, gordura_visceral: e.target.value })} value={form.gordura_visceral} error={errors.gordura_visceral}/>,
-        <Input label={text.labelMetabolismo_Basal} onChange={(e: any) => setForm({ ...form, metabolismo_basal: e.target.value })} value={form.metabolismo_basal} error={errors.metabolismo_basal}/>,
-        <Input label={text.labelMusculos_Esqueleticos} onChange={(e: any) => setForm({ ...form, musculos_esqueleticos: e.target.value })} value={form.musculos_esqueleticos} error={errors.musculos_esqueleticos}/>,
-        <Input label={text.labelIdade_Corporal} onChange={(e: any) => setForm({ ...form, idade_corporal: e.target.value })} value={form.idade_corporal} error={errors.idade_corporal}/>,
-        <Input label={text.labeldata_avaliacao} type={"date"} onChange={(e: any) => setForm({ ...form, data_avaliacao: e.target.value })} value={form.data_avaliacao}/>
+        <Input label={text.labelMassa} onChange={(e: any) => setForm({ ...form, massa: e.target.value })} value={form.massa} error={errors.massa} />,
+        <Input label={text.labelIMC} onChange={(e: any) => setForm({ ...form, imc: e.target.value })} value={form.imc} error={errors.imc} />,
+        <Input label={text.labelGordura_Corporal} onChange={(e: any) => setForm({ ...form, gordura_corporal: e.target.value })} value={form.gordura_corporal} error={errors.gordura_corporal} />,
+        <Input label={text.labelGordura_Visceral} onChange={(e: any) => setForm({ ...form, gordura_visceral: e.target.value })} value={form.gordura_visceral} error={errors.gordura_visceral} />,
+        <Input label={text.labelMetabolismo_Basal} onChange={(e: any) => setForm({ ...form, metabolismo_basal: e.target.value })} value={form.metabolismo_basal} error={errors.metabolismo_basal} />,
+        <Input label={text.labelMusculos_Esqueleticos} onChange={(e: any) => setForm({ ...form, musculos_esqueleticos: e.target.value })} value={form.musculos_esqueleticos} error={errors.musculos_esqueleticos} />,
+        <Input label={text.labelIdade_Corporal} onChange={(e: any) => setForm({ ...form, idade_corporal: e.target.value })} value={form.idade_corporal} error={errors.idade_corporal} />,
+        <Input label={text.labeldata_avaliacao} type={"date"} onChange={(e: any) => setForm({ ...form, data_avaliacao: e.target.value })} value={form.data_avaliacao} />
     ]
 
-    return <div className={"md:h-auto p-2 grid grid-cols-12 gap-4 "}>
-        <form className={"sm:relative md:my-10 md:pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border  col-start-0 col-span-12 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 xxl:col-start-4 xxl:col-span-6"}>
+    return (<Container type={"form"}
+        content={<>
             <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={text.labelTitle} />
             <CriaForm inputs={inputs} className={"grid-cols-1 md:grid-cols-2 lg:grid-cols-3"} />
             <div className={"mx-10 "}>
-                <Button title={text.labelButtonCadastro} className={"m-0 p-2 w-full md:absolute md:right-12 md:bottom-6 md:w-60"} onClick={async(e)=>sendData(e)} />
+                <Button title={text.labelButtonCadastro} className={"m-0 p-2 w-full md:absolute md:right-12 md:bottom-6 md:w-60"} onClick={async (e) => sendData(e)} />
             </div>
-        </form>
-    </div>
+        </>}
+    />)
 }
 
 export default CadastraAvCompCorp

@@ -23,6 +23,13 @@ export class UserController {
         };
     }
 
+    @Get()
+    async users() {
+    console.log(await this.userService.findAll())
+    
+      return await this.userService.findAll();
+    }
+
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(@UploadedFile() avatar: Express.Multer.File, @Req() req: Request,) {

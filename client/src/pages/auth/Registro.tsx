@@ -75,17 +75,19 @@ const Register = () => {
     ]
 
     return (
-        <Container content={<>
-            <div className={"h-40 flex justify-center"}><Img img={Logo} /></div>
-            <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={text.labelTitle} />
-            <CriaForm inputs={inputs} className={"my-2 grid-cols-1"} />
+        <Container
+            type={"auth"}
+            content={<>
+                <div className={"h-40 flex justify-center"}><Img img={Logo} /></div>
+                <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={text.labelTitle} />
+                <CriaForm inputs={inputs} className={"my-2 grid-cols-1"} />
 
-            <div className={"mx-10 "}>
-                <Button type={"submit"} title={text.labelButton} className={"m-0 my-3 p-2 w-full "} onClick={registar} />
-                <Button type={"button"} title={text.labelButtonLogin} className={"m-0 my-3 p-2 w-full "} onClick={() => { goToPage('/') }} />
-            </div>
-        </>
-        }
+                <div className={"mx-10 "}>
+                    <Button type={"submit"} title={text.labelButton} className={"m-0 my-3 p-2 w-full "} onClick={registar} />
+                    <Button type={"button"} title={text.labelButtonLogin} className={"m-0 my-3 p-2 w-full "} onClick={() => { goToPage('/') }} />
+                </div>
+            </>
+            }
         />
     )
 }

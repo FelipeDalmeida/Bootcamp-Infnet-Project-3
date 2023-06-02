@@ -49,3 +49,9 @@ export type User = {
     userPicture: string | null;
   };
 
+  export type Message = {
+    id: number;
+    content: string;
+    sender: number;
+    created_at: string;
+  };

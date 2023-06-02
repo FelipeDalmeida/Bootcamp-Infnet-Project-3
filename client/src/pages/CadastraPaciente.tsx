@@ -10,7 +10,7 @@ import { delay } from "../service/delay"
 import Select from "../components/Select"
 import { pacienteSchema } from "../schemas/pacienteSchema"
 import { setFormErrorsValid } from "../service/formValidation"
-
+import Container from "../components/Container"
 
 //TODO: calcular idade automáticamente.
 
@@ -81,7 +81,7 @@ const CadastraPaciente = ({ }) => {
             cpf: "",
             email: "",
             celular: "",
-           
+
         }
 
         if (!validForm.success) {
@@ -131,16 +131,15 @@ const CadastraPaciente = ({ }) => {
     ]
 
 
-    return <div className={"md:h-auto p-2 grid grid-cols-12 gap-4 "}>
-        <form
-            className={"sm:relative md:my-10 md:pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border  col-start-0 col-span-12 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 xxl:col-start-4 xxl:col-span-6"}>
+    return (<Container type={"form"}
+        content={<>
             <Text className={"text-center mt-6 text-4xl"} type={"h1"} text={"Cadastro"} />
             <CriaForm inputs={inputs} className={"grid-cols-1 md:grid-cols-2 lg:grid-cols-3"} />
             <div className={"mx-10 "}>
-                <Button type={"button"} title={"Cadastar Paciente"} onClick={async(e) => await submitForm(e)} className={"m-0 p-2 w-full md:absolute md:right-12 md:bottom-6 md:w-60"} />
+                <Button type={"button"} title={"Cadastar Paciente"} onClick={async (e) => await submitForm(e)} className={"m-0 p-2 w-full md:absolute md:right-12 md:bottom-6 md:w-60"} />
             </div>
-        </form>
-    </div>
+        </>}
+    />)
 }
 
 export default CadastraPaciente

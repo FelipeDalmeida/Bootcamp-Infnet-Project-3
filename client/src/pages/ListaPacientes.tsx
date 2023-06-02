@@ -4,11 +4,12 @@ import { Pacientes } from '../types/types';
 import Text from '../components/Text';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
-import { FaPlusCircle} from 'react-icons/fa';
+import { FaPlusCircle } from 'react-icons/fa';
 import Search from '../components/Search';
 import Tools from '../components/Tools';
 import Select from '../components/Select';
 import ArrowSearch from '../components/ArrowSearch';
+import Container from '../components/Container';
 
 
 
@@ -54,7 +55,7 @@ const ListaPacientes = ({ }) => {
 
     const [
         {
-            data: {  pacientes: listaPacientes, count: pacientesCount} = {
+            data: { pacientes: listaPacientes, count: pacientesCount } = {
                 count: 0,
                 pacientes: []
             }
@@ -72,9 +73,9 @@ const ListaPacientes = ({ }) => {
 
 
     const buscaPaciente = async () => {
-        setPacientesParams({...pacientesParams,offset:0})
+        setPacientesParams({ ...pacientesParams, offset: 0 })
         await getPacientes({
-            params: {...pacientesParams,offset:0}
+            params: { ...pacientesParams, offset: 0 }
         })
 
         if ((Number(pacientesParams.limit)) >= Number(pacientesCount)) {
@@ -91,7 +92,7 @@ const ListaPacientes = ({ }) => {
         console.log(pacientesCount)
     }
 
-    const setParams = async()=>{
+    const setParams = async () => {
         await getPacientes({
             params: pacientesParams,
         })
@@ -107,7 +108,7 @@ const ListaPacientes = ({ }) => {
             })
         }
     }
-    
+
 
     useEffect(() => {
         getPacientes({
@@ -131,110 +132,109 @@ const ListaPacientes = ({ }) => {
     }, [])
 
 
-    return <div className={"h-full p-2 grid grid-cols-12 gap-4 "}>
-        <div className={"relative md:my-10 md:pb-10 border border-slate-200 rounded-2xl shadow-2xl shadow-blue-500/50  box-border  col-start-0 col-span-12 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 xxl:col-start-4 xxl:col-span-6"}>
-            <Text className={"text-center my-10 text-4xl"} type={"h1"} text={text.title} />
-            <Tools
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-                modalTitle={text.tools}
-                content={
-                    <div className={"grid grid-cols-12 gap-4"}>
-                        <Select
-                            value={pacientesParams.orderby}
-                            onChange={(e) => { setPacientesParams({ ...pacientesParams, orderby: e.target.value }) }}
-                            divClassName={"col-span-12 md:col-span-6"}
-                            label={text.orderby}
-                            options={
-                                [
-                                    <option value={"nome"}>Nome</option>,
-                                    <option value={"data_cadastro"}>Cadastro</option>,
-                                    <option value={"id"}>Matrícula</option>
-                                ]
-                            }
-                        />
-                        <Select
-                            value={pacientesParams.limit}
-                            onChange={(e) => { setPacientesParams({ ...pacientesParams, limit: Number(e.target.value) }) }}
-                            divClassName={"col-span-12 md:col-span-6"}
-                            label={text.limit}
-                            options={
-                                [
-                                    <option value={5}>5</option>,
-                                    <option value={10}>10</option>,
-                                    <option value={15}>15</option>,
-                                    <option value={20}>20</option>,
-                                    <option value={25}>25</option>
-                                ]
-                            }
-                        />
-                        <Select
-                            value={pacientesParams.direction}
-                            onChange={(e) => { setPacientesParams({ ...pacientesParams, direction: e.target.value }) }}
-                            divClassName={"col-span-12 md:col-span-6"}
-                            label={text.direction}
-                            options={
-                                [
-                                    <option value={"asc"}>Mais Antigos</option>,
-                                    <option value={"desc"}>Mais Novos</option>
-                                ]
-                            }
-                        />
-                    </div>}
-                lowerContent={
-                    <Button title={text.changeConfig} onClick={() => { setParams(); setOpenModal(false) }} />
-                }
-            />
-            <Search label={text.search}
-                classNameComponent={"sm:absolute sm:top-10 sm:right-10"}
-                value={pacientesParams.search}
-                onChange={(e) => setPacientesParams({ ...pacientesParams, search: e.target.value })}
-                onClick={() => buscaPaciente()}
-            />
-            <div className={"border-b  border-b-blue-400 px-10 grid grid-cols-2 sm:grid-cols-5  gap-0"}>
-                {listaPacientes?.length > 0 ? <>
-                    <div className={"self-center hidden sm:block"}><Text className={"font-bold"} text={text.Nome} /></div>
-                    <div className={"self-center hidden sm:block"}><Text className={"font-bold"} text={text.Idade} /></div>
-                    <div className={"self-center hidden sm:block"}><Text className={"font-bold"} text={text.Sexo} /></div>
-                    <div className={"self-center hidden sm:block"}><Text className={"font-bold"} text={text.Cadastro} /></div>
-                    <div className={"self-center hidden sm:block"}></div>
-                </>
-                    : ""}
-            </div>
-
-            <>
-            <button title='Adicionar Avaliação' className={`absolute top-3 right-6`}>{<FaPlusCircle className={"text-3xl text-blue-500 hover:text-blue-800 h-10 w-10"} onClick={() => goToPage(`/cadastro`)} />}</button>
-            {listaPacientes ? (listaPacientes?.length > 0) ? listaPacientes.map(({ id, nome, idade, sexo, data_cadastro }: Pacientes) => {
-
-                return <div className={" border-b  border-b-blue-400  px-10 grid grid-cols-2 sm:grid-cols-5  gap-0 "} key={id}>
-                    <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Nome}:`} /><Text text={`${nome}`} /></div>
-                    <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Idade}:`} /><Text text={`${idade}`} /></div>
-                    <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Sexo}:`} />{`${sexo}`}</div>
-                    <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Cadastro}:`} />{`${data_cadastro}`}</div>
-                    <Button title={"Exibir"} className={"w-full col-start-0 col-span-2 sm:col-start-5 sm:w-30"} onClick={() => goToPage(`/pacientes/${id}`)} />
+    return (
+        <Container type={"large"}
+            content={<>
+                <Text className={"text-center my-10 text-4xl"} type={"h1"} text={text.title} />
+                <Tools
+                    openModal={openModal}
+                    setOpenModal={setOpenModal}
+                    modalTitle={text.tools}
+                    content={
+                        <div className={"grid grid-cols-12 gap-4"}>
+                            <Select
+                                value={pacientesParams.orderby}
+                                onChange={(e) => { setPacientesParams({ ...pacientesParams, orderby: e.target.value }) }}
+                                divClassName={"col-span-12 md:col-span-6"}
+                                label={text.orderby}
+                                options={
+                                    [
+                                        <option value={"nome"}>Nome</option>,
+                                        <option value={"data_cadastro"}>Cadastro</option>,
+                                        <option value={"id"}>Matrícula</option>
+                                    ]
+                                }
+                            />
+                            <Select
+                                value={pacientesParams.limit}
+                                onChange={(e) => { setPacientesParams({ ...pacientesParams, limit: Number(e.target.value) }) }}
+                                divClassName={"col-span-12 md:col-span-6"}
+                                label={text.limit}
+                                options={
+                                    [
+                                        <option value={5}>5</option>,
+                                        <option value={10}>10</option>,
+                                        <option value={15}>15</option>,
+                                        <option value={20}>20</option>,
+                                        <option value={25}>25</option>
+                                    ]
+                                }
+                            />
+                            <Select
+                                value={pacientesParams.direction}
+                                onChange={(e) => { setPacientesParams({ ...pacientesParams, direction: e.target.value }) }}
+                                divClassName={"col-span-12 md:col-span-6"}
+                                label={text.direction}
+                                options={
+                                    [
+                                        <option value={"asc"}>Mais Antigos</option>,
+                                        <option value={"desc"}>Mais Novos</option>
+                                    ]
+                                }
+                            />
+                        </div>}
+                    lowerContent={
+                        <Button title={text.changeConfig} onClick={() => { setParams(); setOpenModal(false) }} />
+                    }
+                />
+                <Search label={text.search}
+                    classNameComponent={"sm:absolute sm:top-10 sm:right-10"}
+                    value={pacientesParams.search}
+                    onChange={(e) => setPacientesParams({ ...pacientesParams, search: e.target.value })}
+                    onClick={() => buscaPaciente()}
+                />
+                <div className={"border-b  border-b-blue-400 px-10 grid grid-cols-2 sm:grid-cols-5  gap-0"}>
+                    {listaPacientes?.length > 0 ? <>
+                        <div className={"self-center hidden sm:block"}><Text className={"font-bold"} text={text.Nome} /></div>
+                        <div className={"self-center hidden sm:block"}><Text className={"font-bold"} text={text.Idade} /></div>
+                        <div className={"self-center hidden sm:block"}><Text className={"font-bold"} text={text.Sexo} /></div>
+                        <div className={"self-center hidden sm:block"}><Text className={"font-bold"} text={text.Cadastro} /></div>
+                        <div className={"self-center hidden sm:block"}></div>
+                    </>
+                        : ""}
                 </div>
 
+                <>
+                    <button title='Adicionar Avaliação' className={`absolute top-3 right-6`}>{<FaPlusCircle className={"text-3xl text-blue-500 hover:text-blue-800 h-10 w-10"} onClick={() => goToPage(`/cadastro`)} />}</button>
+                    {listaPacientes ? (listaPacientes?.length > 0) ? listaPacientes.map(({ id, nome, idade, sexo, data_cadastro }: Pacientes) => {
 
-            })
-
-                : <Text className={"text-rose-700 text-center my-10 text-3xl"} type={"h2"} text={text.semPacientes} /> :
-                <Text className={"text-rose-700 text-center my-10 text-3xl"} type={"h2"} text={text.semPacientes} />}</>
-
-            {(listaPacientes?.length > 0) ?
-                <ArrowSearch
-                    btnDisableNext={btnDisable.btnNext}
-                    btnDisablePrev={btnDisable.btnPrevious}
-                    isBtnDisabled={isBtnDisabled}
-                    Params={pacientesParams}
-                    setParams={setPacientesParams}
-                    count={pacientesCount}
-                    get={getPacientes}
-                />
-                : ""}
+                        return <div className={" border-b  border-b-blue-400  px-10 grid grid-cols-2 sm:grid-cols-5  gap-0 "} key={id}>
+                            <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Nome}:`} /><Text text={`${nome}`} /></div>
+                            <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Idade}:`} /><Text text={`${idade}`} /></div>
+                            <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Sexo}:`} />{`${sexo}`}</div>
+                            <div className={"self-center"}><Text className={"sm:hidden font-bold"} text={`${text.Cadastro}:`} />{`${data_cadastro}`}</div>
+                            <Button title={"Exibir"} className={"w-full col-start-0 col-span-2 sm:col-start-5 sm:w-30"} onClick={() => goToPage(`/pacientes/${id}`)} />
+                        </div>
 
 
-        </div>
-    </div>
+                    })
+
+                        : <Text className={"text-rose-700 text-center my-10 text-3xl"} type={"h2"} text={text.semPacientes} /> :
+                        <Text className={"text-rose-700 text-center my-10 text-3xl"} type={"h2"} text={text.semPacientes} />}</>
+
+                {(listaPacientes?.length > 0) ?
+                    <ArrowSearch
+                        btnDisableNext={btnDisable.btnNext}
+                        btnDisablePrev={btnDisable.btnPrevious}
+                        isBtnDisabled={isBtnDisabled}
+                        Params={pacientesParams}
+                        setParams={setPacientesParams}
+                        count={pacientesCount}
+                        get={getPacientes}
+                    />
+                    : ""}
+            </>}
+        />)
 
 
 }
