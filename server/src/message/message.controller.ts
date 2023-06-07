@@ -18,7 +18,6 @@ export class MessageController {
     const user_id = payload.id;
     createMessageDto.sender = user_id
     const message = await this.messageService.create(createMessageDto);
-    // const receiverMessagesListenerId = `messages.${user_id}`;
     this.eventEmitter.emit('message.created',message);
     return await message
     
@@ -31,14 +30,6 @@ export class MessageController {
 
   @Sse('notifications')
   async notifications(@Req() request: Request) {
-    // const subject = new Subject();
-    // // const userId = request['user'].id;
-    // // // return interval(1000).pipe(map((_) => ({ data: { hello: 'world', user: userId } })));
-    // // const userMessagesListenerId = `message.${userId}`;
-    //  this.eventEmitter.on('messages.created',(message: Message)=>{
-    //   subject.next(message);
-    // });
-    // return  subject.pipe(map((message: Message) => ({ data: message })));
 
     return fromEvent(this.eventEmitter, 'message.created')
            .pipe(map((message: Message) => ({  data: message })));

@@ -39,50 +39,47 @@ const Chat = ({ }) => {
         if(newMessage===""){
             return
         }
-        const nextMessage:Message={
-            id:Date.now(),
-            content:newMessage,
-            created_at:new Date().toJSON(),
-            sender:user.id
-        }
-        setMessages([...messages,nextMessage])
+        // const nextMessage:Message={
+        //     id:Date.now(),
+        //     content:newMessage,
+        //     created_at:new Date().toJSON(),
+        //     sender:user.id
+        // }
+        //setMessages([...messages,nextMessage])
         postMessage(newMessage)
         setNewMessage("")
     }
 
-    async function listenMessages() {
-        await listenMessengerNotifications()
-      }
-
-    // useEffect(() => {
-    //     messagesRef.current = messages;
-    //     if (messagesScrollRef.current !== null) {
-    //       messagesScrollRef.current?.scrollTo(
-    //         0,
-    //         messagesScrollRef.current.scrollHeight
-    //       );
-    //     }
-    //   }, [messages]);
+    useEffect(() => {
+        messagesRef.current = messages;
+        if (messagesScrollRef.current !== null) {
+          messagesScrollRef.current?.scrollTo(
+            0,
+            messagesScrollRef.current.scrollHeight
+          );
+        }
+      }, [messages]);
 
     useEffect(()=>{
 
 
 
         onLoadUsers().then(response=>{
-            // console.log(response)
             setUsers(response)
             getAllMessages().then(response=>{
                 setMessages(response)
             })
         })
-        listenMessages()
+        listenMessengerNotifications((message)=>{
+            setMessages([...messagesRef.current,message])
+        })
         
     },[])
 
 
     return (
         <Container type={"small-no-pb"} content={<>
-            <div className={"overflow-auto h-[calc(100vh-160px-80px)]"}>
+            <div className={"overflow-auto h-[calc(100vh-160px-80px)]"} ref={(ref) => (messagesScrollRef.current = ref)}>
                 {messages.map((message) => {
                     let userPos=users.map(e => e.id).indexOf(message.sender)
                     return <MessageContainer
