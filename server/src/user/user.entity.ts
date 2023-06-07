@@ -4,6 +4,7 @@ import { Avantropometrica } from "src/exames/avantropometrica/avantropometrica.e
 import { Compcorp } from "src/exames/compcorp/compcorp.entity";
 import { Paciente } from "src/pacientes/paciente.entity";
 import { Email } from "src/email/email.entity";
+import { Message } from "src/message/message.entity";
 
 
 @Entity()
@@ -42,6 +43,9 @@ export class User{
 
     @OneToMany(()=>Email,(email)=>email.user)
     emailVerify =new Collection<Email>(this)
+
+    @OneToMany(()=>Message,(message)=>message.sender)
+    sentMessage=new Collection<Message>(this)
 
     async comparePassword(password:string){
         const isPasswordEqual = await bcrypt.compare(password,this.password);

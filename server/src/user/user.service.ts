@@ -7,8 +7,6 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { wrap } from '@mikro-orm/core';
-import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
-import * as bcrypt from 'bcrypt'; 
 
 @Injectable()
 export class UserService {

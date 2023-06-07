@@ -22,7 +22,7 @@ const MessageContainer=({isCreator,content,created_at,user}:MessageContainerProp
     return(
     
         <div className={"w-8/12 p-3 m-4 border border-slate-200 float-left rounded-2xl"}>
-            <div className={"text-center"}>
+            <div className={""}>
                 <span className={"px-3 bg-sky-100 font-bold rounded-2xl"}>{user?user:"Usuário indefinido"}</span>
             </div>
             {content}
