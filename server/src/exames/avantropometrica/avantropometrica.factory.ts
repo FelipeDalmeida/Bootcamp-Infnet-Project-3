@@ -1,5 +1,7 @@
 import { Factory, Faker } from '@mikro-orm/seeder';
 import { Avantropometrica } from './avantropometrica.entity';
+import { User } from 'src/user/user.entity';
+import { Paciente } from 'src/pacientes/paciente.entity';
 
 
 function getRandomInt(min: number, max: number) {
@@ -23,7 +25,7 @@ export class AvantropometricaFactory extends Factory<Avantropometrica>{
       largura_quadril: getRandomInt(1,150),
       altura_joelho: getRandomInt(1,150),
       altura_tornozelo: getRandomInt(1,150),
-      data_avaliacao: faker.date.recent().toDateString()
+      data_avaliacao: faker.date.recent().toDateString(),
     };
   }
 

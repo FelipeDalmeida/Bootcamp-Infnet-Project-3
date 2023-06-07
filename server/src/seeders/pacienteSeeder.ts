@@ -4,7 +4,7 @@ import { AvantropometricaFactory } from 'src/exames/avantropometrica/avantropome
 import { CompcorpFactory } from 'src/exames/compcorp/compcorp.factory';
 import { PacienteFactory } from 'src/pacientes/paciente.factory';
 
-export class PacienteSeeder extends Seeder {
+export class PacienteSeeder extends Seeder {    //OBS: Descontinuado
   async run(em: EntityManager): Promise<void> {
     const paciente = await new PacienteFactory(em)
     .each((paciente)=>{
