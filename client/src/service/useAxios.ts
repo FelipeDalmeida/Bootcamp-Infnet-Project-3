@@ -8,7 +8,7 @@ export { default as useAxios } from 'axios-hooks'
 
 
 const axios = Axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: process.env.REACT_APP_API_URL,
 })
 
 

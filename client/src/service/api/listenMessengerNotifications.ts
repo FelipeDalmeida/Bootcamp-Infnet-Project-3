@@ -8,7 +8,7 @@ export async function listenMessengerNotifications(
 ) {
   const token = AuthToken.get();
   await fetchEventSource(
-    `http://localhost:8080/message/notifications`,
+    `${process.env.REACT_APP_API_URL}/message/notifications`,
     {
       onmessage(data) {
         if (data && data.data) {
