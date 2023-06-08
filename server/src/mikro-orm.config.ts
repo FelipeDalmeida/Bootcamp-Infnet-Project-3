@@ -9,11 +9,11 @@ dotenv.config();
 
 export default {
     entities:[Paciente,User,Avantropometrica,Compcorp,Email,Message],
-    port:3306,
-    dbName:"examesNest",
-    host:"127.0.0.1",
-    user:"root",
-    password:"password",
+    port:process.env.MYSQL_PORT,
+    dbName:process.env.MYSQL_DB,
+    host:process.env.MYSQL_HOST,
+    user:process.env.MYSQL_USER,
+    password:process.env.MYSQL_PASSWORD,
     type:"mysql"
 
   };

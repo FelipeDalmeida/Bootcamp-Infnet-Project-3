@@ -11,6 +11,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     errorHttpStatusCode:HttpStatus.UNPROCESSABLE_ENTITY,
   }));
-  await app.listen(8080);
+  await app.listen(process.env.PORT);
 }
 bootstrap();

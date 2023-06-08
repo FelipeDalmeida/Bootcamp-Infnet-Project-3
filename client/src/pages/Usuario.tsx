@@ -107,7 +107,7 @@ const Usuario = () => {
                         <img
                             src={
                                 usuario.userPicture
-                                    ? `http://localhost:8080/${usuario.userPicture}`
+                                    ? `${process.env.REACT_APP_API_URL}/${usuario.userPicture}`
                                     : "/default-avatar.png"
                             }
                             className="w-24 h-24 rounded-full"
