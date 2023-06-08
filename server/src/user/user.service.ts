@@ -41,7 +41,6 @@ export class UserService {
     try{
         await fs.writeFile(avatarPath,avatar);
     } catch (error){
-        console.log(error)
         return{
             success:false,
             pictureUrl:null 

@@ -77,19 +77,19 @@ const Laudo = () => {
     );
     useEffect(() => {
         getLaudo().then(response=>{
-            console.log(response)
+            //console.log(response)
         })
-        console.log(laudoPaciente)
-        console.log("Carregado")
+        // console.log(laudoPaciente)
+        // console.log("Carregado")
     }, [])
     useEffect(() => {
         if (laudoPaciente) {
-            console.log(laudoPaciente.data)
+            //console.log(laudoPaciente.data)
             if(laudoPaciente.success){
                 setForm({...laudoPaciente.data});
             }
         }
-        console.log(form)
+        //console.log(form)
     }, [laudoPaciente]);
 
     const infoPaciente = [

@@ -15,7 +15,7 @@ export async function listenMessengerNotifications(
           const message = JSON.parse(data.data);
           onMessage(message);
         }
-        console.log("evento")
+
       },
       headers: {
         Authorization: `Bearer ${token}`,

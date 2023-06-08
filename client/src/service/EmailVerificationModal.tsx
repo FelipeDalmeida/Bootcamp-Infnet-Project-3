@@ -79,10 +79,6 @@ export function EmailVerificationModal() {
         }
     }
 
-    useEffect(()=>{
-        console.log(user)
-        // setOpen(!user.isEmailVerified && user.isAuthenticated)
-    },[user])
 
     return <Modal
         open={open}

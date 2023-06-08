@@ -89,7 +89,7 @@ const ListaPacientes = ({ }) => {
                 btnNext: false,
             })
         }
-        console.log(pacientesCount)
+        //console.log(pacientesCount)
     }
 
     const setParams = async () => {

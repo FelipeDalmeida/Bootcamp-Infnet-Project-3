@@ -18,7 +18,6 @@ export async function login(
     },
     {
       validateStatus(status) {
-        console.log("status", status);
         if (status <= 401) {
           return true;
         }

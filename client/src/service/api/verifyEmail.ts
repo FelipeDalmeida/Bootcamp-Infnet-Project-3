@@ -9,7 +9,6 @@ export async function verifyEmail(code: string,id:any) {
     code,
     id
   });
-  console.log("response",response)
   if(response.data.success){
     return {
       ...response.data,

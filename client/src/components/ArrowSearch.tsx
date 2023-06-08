@@ -18,7 +18,7 @@ const ArrowSearch = ({btnDisablePrev,btnDisableNext,Params,setParams,count,isBtn
   
         let params = { ...Params }
         const nextOffset = Number(params.offset) + Number(params.limit);
-        console.log(nextOffset)
+
         if (nextOffset < count) {
             params = {
                 ...Params,
@@ -36,7 +36,7 @@ const ArrowSearch = ({btnDisablePrev,btnDisableNext,Params,setParams,count,isBtn
         }
 
         setParams(params)
-        console.log(params)
+
 
         await get({
             params: params,

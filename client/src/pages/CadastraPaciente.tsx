@@ -89,7 +89,7 @@ const CadastraPaciente = ({ }) => {
 
 
             setFormErrorsValid(validForm, errors, setErrors, erros)
-            console.log(errors)
+            // console.log(errors)
             return false
         }
 
@@ -106,7 +106,7 @@ const CadastraPaciente = ({ }) => {
             }
         })
         setErrors(erros)
-        console.log("Cadastrado")
+        //console.log("Cadastrado")
         await delay(0.5)
         goToPage("/")
 

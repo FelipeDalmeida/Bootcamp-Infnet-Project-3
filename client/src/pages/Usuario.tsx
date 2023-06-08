@@ -65,7 +65,7 @@ const Usuario = () => {
                 alert(text.uploadFailure);
             }
         }
-        console.log("picture", usuario.userPicture)
+        //console.log("picture", usuario.userPicture)
     }
 
 
@@ -80,7 +80,7 @@ const Usuario = () => {
         if (response.success) {
             alert(text.labelAtualizacaoSuccess)
             setDisabled(true)
-            console.log(response)
+            //console.log(response)
         } else {
             alert(text.labelAtualizacaoFail)
         }

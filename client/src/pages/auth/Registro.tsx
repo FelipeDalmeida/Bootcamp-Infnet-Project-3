@@ -46,8 +46,7 @@ const Register = () => {
                 email: registro.email,
                 password: registro.password
             })
-            console.log("response", response)
-
+            
             if (response.success && response.accessToken) {
                 const { accessToken, user } = response;
                 AuthToken.set(accessToken)

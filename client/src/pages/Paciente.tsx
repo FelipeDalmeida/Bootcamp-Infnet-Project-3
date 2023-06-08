@@ -120,7 +120,7 @@ const PacientePage = ({ }) => {
 
 
             setFormErrorsValid(validForm, errors, setErrors, erros)
-            console.log(errors)
+            //console.log(errors)
             return false
         }
 
@@ -151,7 +151,7 @@ const PacientePage = ({ }) => {
 
     useEffect(() => {
         getPaciente()
-        console.log(infoPaciente)
+        //console.log(infoPaciente)
         console.log("Atualizado")
     }, [])
 

@@ -29,11 +29,11 @@ export function LoadAuthUser() {  //em cada pagina irá verificar se o token est
 
     useEffect(() => {
         setToken(AuthToken.get());
-        console.log(token)
+      
         if (token || user.isAuthenticated) {
             getMyself().then((user) => {
                 setUser({ ...user, isAuthenticated: true });
-                console.log(user)
+   
               });
         }
 

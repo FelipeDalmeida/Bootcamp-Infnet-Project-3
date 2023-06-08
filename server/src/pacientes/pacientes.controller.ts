@@ -17,7 +17,7 @@ export class PacientesController {
     const userId =payload.id;
     createPacienteDto.user=userId
     const response = await this.pacientesService.create(createPacienteDto);
-    console.log(response)
+
     return response
   }
 
