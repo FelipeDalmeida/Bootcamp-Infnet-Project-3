@@ -30,17 +30,14 @@ export class MessageController {
 
   @Sse('sse/notifications')
   async notifications(@Req() request: Request) {
-    console.log("notifications")
-    const subject = new Subject();
-    // const payload = await request['user'];
-    // const user_id = payload.id;
-    // const userMessagesListenerId = `messages.${user_id}`;
-    this.eventEmitter.on('message.created', (message: Message) => {
-      subject.next(message);
-    });
-    return subject.pipe(map((message: Message) => ({ data: message })));
-    // return fromEvent(this.eventEmitter, 'message.created')
-    //        .pipe(map((message: Message) => ({  data: message })));
+    // console.log("notifications")
+    // const subject = new Subject();
+    // this.eventEmitter.on('message.created', (message: Message) => {
+    //   subject.next(message);
+    // });
+    // return subject.pipe(map((message: Message) => ({ data: message })));
+    return fromEvent(this.eventEmitter, 'message.created')
+           .pipe(map((message: Message) => ({  data: message })));
   }
 
 }
