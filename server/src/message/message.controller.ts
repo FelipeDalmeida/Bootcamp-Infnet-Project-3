@@ -28,11 +28,19 @@ export class MessageController {
     return await this.messageService.findAll();
   }
 
-  @Sse('notifications')
+  @Sse('sse/notifications')
   async notifications(@Req() request: Request) {
-
-    return fromEvent(this.eventEmitter, 'message.created')
-           .pipe(map((message: Message) => ({  data: message })));
+    console.log("notifications")
+    const subject = new Subject();
+    // const payload = await request['user'];
+    // const user_id = payload.id;
+    // const userMessagesListenerId = `messages.${user_id}`;
+    this.eventEmitter.on('message.created', (message: Message) => {
+      subject.next(message);
+    });
+    return subject.pipe(map((message: Message) => ({ data: message })));
+    // return fromEvent(this.eventEmitter, 'message.created')
+    //        .pipe(map((message: Message) => ({  data: message })));
   }
 
 }

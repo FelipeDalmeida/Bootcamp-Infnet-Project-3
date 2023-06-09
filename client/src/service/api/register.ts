@@ -19,6 +19,7 @@ export async function register(
   const response = await api.post("/auth/register", createAccountInput);
   
   if(response){
+    
     return {
       ...response.data,
       success: true
