@@ -38,6 +38,7 @@ export class MessageController {
     // return subject.pipe(map((message: Message) => ({ data: message })));
     return fromEvent(this.eventEmitter, 'message.created')
            .pipe(map((message: Message) => ({  data: message })));
+           
   }
 
 }
